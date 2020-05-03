@@ -1,29 +1,8 @@
 # representative_vote
 
-## Project setup
-```
-npm install
-```
+## 內容介紹
+為成大學代會所製作的開會投票系統
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 畫面預覽
+![主畫面](https://i.imgur.com/IuvjO1v.png)
+![議會選擇](https://i.imgur.com/xCs2uaC.png)

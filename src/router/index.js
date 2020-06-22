@@ -31,6 +31,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/ConferenceSchedule.vue'),
   },
   {
+    path: '/editConference',
+    name: 'schedule',
+    component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/EditConferenceChoose.vue'),
+  },
+  {
+    path: '/editConference/:delibrationID',
+    name: 'schedule',
+    component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/EditConferenceSchedule.vue'),
+  },
+  {
     path: '/vote',
     name: 'vote',
     component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../components/VoteDetailWindow.vue'),

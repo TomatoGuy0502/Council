@@ -2,8 +2,16 @@
   <div id="app">
     <Navbar :semester="semester" :period="period" :name="name"/>
     <div id="main" class="container">
-      <router-view @update-title="updateTitle1"/>
+      <router-view 
+        @update-title="updateTitle1" 
+        @handle-error-window="handleErrorWindow"
+      />
     </div>
+    <ErrorWindow 
+      v-if="errorInfo.showError" 
+      :errorType="errorInfo.errorType" 
+      @close-window="errorInfo.showError=false"
+    />
     <!-- <VoteWindow/> -->
     <Footer/>
   </div>
@@ -12,6 +20,7 @@
 <script>
 import Navbar from '@/layout/components/Navbar.vue'
 import Footer from '@/layout/components/Footer.vue'
+import ErrorWindow from "@/components/ErrorWindow.vue";
 // import VoteWindow from '@/components/VoteWindow.vue'
 // import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
 // import { mapState } from 'vuex'
@@ -21,13 +30,18 @@ export default {
   components: {
     Navbar,
     Footer,
+    ErrorWindow,
     // VoteWindow,
   },
   data(){
     return {
       semester: 0,
       period: 0,
-      name: '成大學代會'
+      name: '成大學代會',
+      errorInfo: {
+        showError: false,
+        errorType: 'login'
+      }
     }
   },
   methods: {
@@ -37,6 +51,14 @@ export default {
       this.period = period
       this.name = name
     },
+    handleErrorWindow(method, type) {
+      if(method === "open") {
+        this.errorInfo.showError = true
+        this.errorInfo.errorType = type
+      } else {
+        this.errorInfo.showError = false
+      }
+    }
   }
 }
 </script>
@@ -56,6 +78,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 510px) {

@@ -35,7 +35,6 @@
 
 <script>
 import {delibrationID} from '../api/proposal'
-import {convertNumber} from '../services/converter'
 
 export default {
   name: "ConferenceSchedule",
@@ -56,7 +55,7 @@ export default {
       this.proposalList = response.data
     },
     convertNumber(num) {
-      return convertNumber(num)
+      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
     },
   }
 };

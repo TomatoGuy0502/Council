@@ -71,41 +71,41 @@ export default {
   flex-direction: column;
   width: 360px;
   align-items: center;
-  .login_target{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+}
+.login_target{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.login_form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  label{
+    color:$title1;
   }
-  .login_form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    label{
-      color:$title1;
-    }
-    input.input{
-      text-align: center;
-      font-size: $text;
-      border: 1.5px #767171 solid;
-      border-radius: 7px;
-      margin-left: 15px;
-      margin-bottom: 20px;
-      padding: 10px 5px;
-      background-color: #ffffff00;
-    }
-    &__enter{
-      background-color: $primary;
-      border-radius: 7px;
-      border: none;
-      color: #fff;
-      font-size: $text_s;
-      font-weight: bold;
-      padding: 5px 30px;
-      margin: 0;
-      cursor: pointer;
-    }
+  input.input{
+    text-align: center;
+    font-size: $text;
+    border: 1.5px #767171 solid;
+    border-radius: 7px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    padding: 10px 5px;
+    background-color: #ffffff00;
+  }
+  &__enter{
+    background-color: $primary;
+    border-radius: 7px;
+    border: none;
+    color: #fff;
+    font-size: $text_s;
+    font-weight: bold;
+    padding: 5px 30px;
+    margin: 0;
+    cursor: pointer;
   }
 }
 .close_layer{

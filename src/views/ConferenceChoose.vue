@@ -1,6 +1,6 @@
 <template>
   <div class="conference_choose">
-    <LoginWindow
+    <!-- <LoginWindow
       :delibrationID="delibrationID"
       :semester="semester"
       :period="period"
@@ -9,15 +9,14 @@
       :position="position"
       v-if="LOGIN_SHOW"
       @close-window="LOGIN_SHOW = 0"
-    />
-    <ErrorWindow style="display: none" />
+    /> -->
     <p>請 選 擇 會 議</p>
     <div class="conference_list">
       <div
         v-for="(item,index) in conferenceList"
         :key="index"
         class="conference_item"
-        @click="openLoginWindow(item)"
+        @click="joinDelibration(item)"
       >
         <div class="item_block">
           <h3 class="item_block__session">{{item.semester}}學年度第{{convertNumber(item.period)}}會期</h3>
@@ -31,15 +30,14 @@
 </template>
 
 <script>
-import LoginWindow from "@/components/LoginWindow.vue";
-import ErrorWindow from "@/components/ErrorWindow.vue";
+// import LoginWindow from "@/components/LoginWindow.vue";
 import { delibration } from "../api/delibration";
+import router from '@/router'
 
 export default {
   name: "ConferenceChoose",
   components: {
-    LoginWindow,
-    ErrorWindow
+    // LoginWindow,
   },
   data() {
     return {
@@ -64,16 +62,20 @@ export default {
     convertNumber(num) {
       return ["一","二","三","四","五","六","七","八","九","十"][num-1];
     },
-    openLoginWindow({delibrationID, semester, period, name, startTime, position}) {
+    joinDelibration({delibrationID, semester, period, name}) {
       this.$emit('update-title', semester, period, name)
-      this.delibrationID = delibrationID
-      this.semester = semester
-      this.period = period
-      this.name = name
-      this.startTime = startTime
-      this.position = position
-      this.LOGIN_SHOW = 1
-    }
+      router.push({name: 'schedule', params: {delibrationID:delibrationID}})
+    },
+    // openLoginWindow({delibrationID, semester, period, name, startTime, position}) {
+    //   this.$emit('update-title', semester, period, name)
+    //   this.delibrationID = delibrationID
+    //   this.semester = semester
+    //   this.period = period
+    //   this.name = name
+    //   this.startTime = startTime
+    //   this.position = position
+    //   this.LOGIN_SHOW = 1
+    // }
   }
 };
 </script>

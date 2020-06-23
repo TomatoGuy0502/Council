@@ -21,7 +21,7 @@ export default {
         ["會議記錄",""],
         // ["法規查詢",""],
         ["編輯會議","/editConference"],
-        ["登入會議","/conference"]
+        ["加入會議","/conference"]
       ]
     }
   },

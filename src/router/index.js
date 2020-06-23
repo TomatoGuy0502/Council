@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import store from '../store'
+import store from '../store'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -15,6 +15,14 @@ const routes = [
     }
   },
   {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "ConferenceChoose" */ '../views/Login.vue'),
+    meta:{
+      title:'登入系統'
+    }
+  },
+  {
     path: '/conference',
     name: 'conference',
     // route level code-splitting
@@ -22,7 +30,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "ConferenceChoose" */ '../views/ConferenceChoose.vue'),
     meta:{
-      title:'登入會議'
+      title:'加入會議'
     }
   },
   {
@@ -57,6 +65,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  store,
   scrollBehavior(to, from, savedPosition) {
     if(savedPosition){
       return savedPosition
@@ -66,8 +75,14 @@ const router = new VueRouter({
   }
 })
 
-// router.beforeEach((to, from, next) => {
-//   next()
-// })
+router.beforeEach((to, from, next) => {
+  if(to.path !== '/login' && !store.state.userInfo.isLogin) {
+    next({ path: '/login' })
+  } else if(to.path === '/login' && store.state.userInfo.isLogin) {
+    next({ path: '/', replace: true})
+  } else {
+    next()
+  }
+})
 
 export default router

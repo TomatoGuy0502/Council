@@ -7,16 +7,16 @@
       :name="name"
       :startTime="startTime"
       :position="position"
-      v-if="LOGIN_SHOW"
-      @close-window="LOGIN_SHOW = 0"
+      v-if="showLogin"
+      @close-window="showLogin = 0"
     />
     <WarnWindow 
       :semester="semester"
       :period="period"
       :name="name"
       :deleteIndex="deleteIndex"
-      v-if="WARN_SHOW"
-      @close-window="WARN_SHOW = 0"
+      v-if="showWarning"
+      @close-window="showWarning = 0"
       @delete-delibration="deleteDelibration"
     />
     <p>請 選 擇 會 議</p>
@@ -46,7 +46,6 @@
 import LoginWindow from "@/components/LoginWindow.vue";
 import WarnWindow from "@/components/WarnWindow.vue";
 import { delibration } from "../api/delibration";
-import { convertNumber } from "../services/converter";
 import router from "@/router";
 
 export default {
@@ -65,8 +64,8 @@ export default {
       startTime: "",
       position: "",
       deleteIndex: 0,
-      LOGIN_SHOW: 0,
-      WARN_SHOW: 0
+      showLogin: 0,
+      showWarning: 0
     };
   },
   created() {
@@ -78,12 +77,12 @@ export default {
       this.conferenceList = response.data;
     },
     deleteDelibration(deleteIndex) {
-      this.WARN_SHOW = 0;
+      this.showWarning = 0;
       this.conferenceList.splice(deleteIndex, 1);
       // deleteDelibration(delibrationID);
     },
     convertNumber(num) {
-      return convertNumber(num);
+      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
     },
     openLoginWindow({delibrationID, semester, period, name, startTime, position}) {
       this.$emit("update-title", semester, period, name);
@@ -93,14 +92,14 @@ export default {
       this.name = name;
       this.startTime = startTime;
       this.position = position;
-      this.LOGIN_SHOW = 1;
+      this.showLogin = 1;
     },
     openWarningWindow({semester, period, name}, deleteIndex) {
       this.semester = semester;
       this.period = period;
       this.name = name;
       this.deleteIndex = deleteIndex
-      this.WARN_SHOW = 1;
+      this.showWarning = 1;
     },
     editSchedule({ delibrationID, semester, period, name }) {
       this.$emit("update-title", semester, period, name);

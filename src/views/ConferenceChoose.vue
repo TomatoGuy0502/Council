@@ -20,7 +20,7 @@
         @click="openLoginWindow(item)"
       >
         <div class="item_block">
-          <h3 class="item_block__session">{{item.semester}}學年度第{{convertNumber(item.period)}}學期</h3>
+          <h3 class="item_block__session">{{item.semester}}學年度第{{convertNumber(item.period)}}會期</h3>
           <h2 class="item_block__name">{{item.name}}</h2>
           <div class="item_block__time">{{item.startTime}} 開放登入</div>
         </div>
@@ -34,7 +34,6 @@
 import LoginWindow from "@/components/LoginWindow.vue";
 import ErrorWindow from "@/components/ErrorWindow.vue";
 import { delibration } from "../api/delibration";
-import { convertNumber } from "../services/converter";
 
 export default {
   name: "ConferenceChoose",
@@ -63,7 +62,7 @@ export default {
       this.conferenceList = response.data;
     },
     convertNumber(num) {
-      return convertNumber(num);
+      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
     },
     openLoginWindow({delibrationID, semester, period, name, startTime, position}) {
       this.$emit('update-title', semester, period, name)

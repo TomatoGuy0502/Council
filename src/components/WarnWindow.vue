@@ -33,7 +33,7 @@ export default {
   z-index: 1;
 }
 .warn_block{
-  background-color: $primary;
+  background-color: #c00000;
   border-radius: 7px;
   border: none;
   color: #fff;

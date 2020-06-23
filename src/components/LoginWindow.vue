@@ -5,7 +5,7 @@
       <div class="login_target">
         <div class="conference_item">
           <div class="item_block">
-            <h3 class="item_block__session">{{semester}}學年度第{{period}}會期</h3>
+            <h3 class="item_block__session">{{semester}}學年度第{{convertNumber(period)}}會期</h3>
             <h2 class="item_block__name">{{name}}</h2>
             <div class="item_block__time">{{startTime}} 開放登入</div>
           </div>
@@ -55,7 +55,10 @@ export default {
           router.push({name: 'schedule', params: {delibrationID:this.delibrationID}})
         }
       }
-    }
+    },
+    convertNumber(num) {
+      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
+    },
   }
 }
 </script>

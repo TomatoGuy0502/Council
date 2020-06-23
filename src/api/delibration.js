@@ -31,3 +31,9 @@ export const createDelibration = (dName, startTime, position, semester, period) 
     })
 }
 
+export const getEditDelibration = (delibrationID) => {
+  return Request({
+    url: '/delibration/editDelibration/' + delibrationID,
+    method: 'get'
+  })
+}

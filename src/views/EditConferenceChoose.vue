@@ -10,7 +10,15 @@
       v-if="LOGIN_SHOW"
       @close-window="LOGIN_SHOW = 0"
     />
-    <ErrorWindow style="display: none" />
+    <WarnWindow 
+      :semester="semester"
+      :period="period"
+      :name="name"
+      :deleteIndex="deleteIndex"
+      v-if="WARN_SHOW"
+      @close-window="WARN_SHOW = 0"
+      @delete-delibration="deleteDelibration"
+    />
     <p>請 選 擇 會 議</p>
     <div class="conference_list">
       <div
@@ -24,8 +32,8 @@
           <h2 class="item_block__name">{{item.name}}</h2>
           <div class="item_block__time">{{item.startTime}} 開放登入</div>
           <div class="item_block__edit">
-            <div>編輯</div>
-            <div>刪除</div>
+            <div @click.stop="editSchedule(item)">編輯</div>
+            <div @click.stop="openWarningWindow(item, index)">刪除</div>
           </div>
         </div>
         <p class="item_authority">權限：{{item.position}}</p>
@@ -36,26 +44,29 @@
 
 <script>
 import LoginWindow from "@/components/LoginWindow.vue";
-import ErrorWindow from "@/components/ErrorWindow.vue";
+import WarnWindow from "@/components/WarnWindow.vue";
 import { delibration } from "../api/delibration";
 import { convertNumber } from "../services/converter";
+import router from "@/router";
 
 export default {
   name: "ConferenceChoose",
   components: {
     LoginWindow,
-    ErrorWindow
+    WarnWindow
   },
   data() {
     return {
       conferenceList: [],
-      delibrationID: '',
+      delibrationID: "",
       semester: 0,
       period: 0,
       name: "",
       startTime: "",
       position: "",
-      LOGIN_SHOW: 0
+      deleteIndex: 0,
+      LOGIN_SHOW: 0,
+      WARN_SHOW: 0
     };
   },
   created() {
@@ -66,18 +77,37 @@ export default {
       let response = await delibration();
       this.conferenceList = response.data;
     },
+    deleteDelibration(deleteIndex) {
+      this.WARN_SHOW = 0;
+      this.conferenceList.splice(deleteIndex, 1);
+      // deleteDelibration(delibrationID);
+    },
     convertNumber(num) {
       return convertNumber(num);
     },
     openLoginWindow({delibrationID, semester, period, name, startTime, position}) {
-      this.$emit('update-title', semester, period, name)
-      this.delibrationID = delibrationID
-      this.semester = semester
-      this.period = period
-      this.name = name
-      this.startTime = startTime
-      this.position = position
-      this.LOGIN_SHOW = 1
+      this.$emit("update-title", semester, period, name);
+      this.delibrationID = delibrationID;
+      this.semester = semester;
+      this.period = period;
+      this.name = name;
+      this.startTime = startTime;
+      this.position = position;
+      this.LOGIN_SHOW = 1;
+    },
+    openWarningWindow({semester, period, name}, deleteIndex) {
+      this.semester = semester;
+      this.period = period;
+      this.name = name;
+      this.deleteIndex = deleteIndex
+      this.WARN_SHOW = 1;
+    },
+    editSchedule({ delibrationID, semester, period, name }) {
+      this.$emit("update-title", semester, period, name);
+      router.push({
+        name: "editSchedule",
+        params: { delibrationID: delibrationID }
+      });
     }
   }
 };

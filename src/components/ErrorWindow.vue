@@ -1,5 +1,6 @@
 <template>
   <div class="error_window container window">
+    <div class="close_layer" @click="$emit('close-window')"></div>
     <div class="error_container">
       <span class="error_block">錯 誤</span>
       <p class="error_message">會議簽到未開放/已過期</p>

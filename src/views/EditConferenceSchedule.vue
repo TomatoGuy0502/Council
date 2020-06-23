@@ -16,34 +16,32 @@
         <h4 class="schedule_block__title">四、議案與討論事項</h4>
         <div class="schedule_block__detail">
           <div v-for="(proposal, index) in proposalList" :key="index" class="case">
-            <router-link :to="{name: 'detail',params: {proposalID:proposal.proposalID}}" tag="div" class="case__number">第{{convertNumber(index+1)}}案</router-link>
+            <div class="case__header">
+              <div class="case__number">第{{convertNumber(index+1)}}案</div>
+              <div class="case__delete" @click="deleteProposal(index)">刪除</div>
+            </div>
             <table class="case__form">
               <tr>
                 <td>提案單位</td>
                 <td>
-                  <select name="">
-                    <option value="">123</option>
-                    <option value="">456</option>
-                    <option value="">789</option>
-                  </select>
+                  <input type="text" placeholder="請填入單位" v-model="proposal.dept">
                 </td>
               </tr>
               <tr>
                 <td>案由</td>
                 <td>
-                  <textarea name="" placeholder="請填入案由"></textarea>
+                  <textarea name="" placeholder="請填入案由" v-model="proposal.reason"></textarea>
                 </td>
               </tr>
               <tr>
                 <td>說明</td>
                 <td>
-                  <textarea name="" placeholder="請填入說明"></textarea>
+                  <textarea name="" placeholder="請填入說明" v-model="proposal.description"></textarea>
                 </td>
               </tr>
             </table>
-            <div class="case__add_proposal">新增議案</div>
           </div>
-          
+          <div class="schedule_block__add_proposal" @click="addNewProposal">新增議案</div>
         </div>
       </div>
       <div class="schedule_block">
@@ -60,7 +58,7 @@
 </template>
 
 <script>
-import {delibrationID} from '../api/proposal'
+import {getEditDelibration} from '../api/delibration'
 import {convertNumber} from '../services/converter'
 
 export default {
@@ -74,16 +72,27 @@ export default {
     };
   },
   created() {
-    this.getProposal(this.$route.params.delibrationID)
+    this.getEditDelibration(this.$route.params.delibrationID)
   },
   methods: {
-    async getProposal(dID) {
-      let response = await delibrationID(dID)
-      this.proposalList = response.data
+    async getEditDelibration(dID) {
+      let response = await getEditDelibration(dID)
+      this.proposalList = response.data.proposal
     },
     convertNumber(num) {
       return convertNumber(num)
     },
+    addNewProposal() {
+      this.proposalList.push({
+        "dept": "",
+        "reason": "",
+        "description": "",
+        "discussion": "",
+      })
+    },
+    deleteProposal(index) {
+      this.proposalList.splice(index, 1)
+    }
   }
 };
 </script>
@@ -154,6 +163,12 @@ export default {
     .case {
       margin-bottom: 5px;
       width: 100%;
+      &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
       &__number {
         width: 140px;
         font-size: $text_s;
@@ -162,6 +177,14 @@ export default {
         background-color: $title2;
         border-radius: 7px;
         padding: 5px;
+      }
+      &__delete {
+        color: #fff;
+        background-color: #c00000;
+        font-size: 24px;
+        border-radius: 7px;
+        padding: 5px 10px 5px 15px;
+        font-weight: 700;
       }
       &__form {
         width: 100%;
@@ -174,20 +197,12 @@ export default {
             font-size: $text;
           }
         }
-        select {
+        input, textarea {
           height: 40px;
           border: none;
           background-color: #a9d18e;
           border-radius: 7px;
           padding: 0 10px;
-        }
-        textarea {
-          padding: 0 10px;
-          height: 80px;
-          resize: none;
-          border: none;
-          background-color: #a9d18e;
-          border-radius: 7px;
           &::placeholder{
             font-size: 22px;
             line-height: 78px;
@@ -195,17 +210,31 @@ export default {
             color: #fff;
           }
         }
+        textarea {
+          height: 80px;
+          resize: none;
+        }
       }
-      &__add_proposal {
-        background-color: #00b050;
-        border-radius: 7px;
-        height: 53px;
-        line-height: 53px;
-        color: #fff;
-        font-weight: 700;
-        font-size: $text_s;
-      }
+      // &__add_proposal {
+      //   background-color: #00b050;
+      //   border-radius: 7px;
+      //   height: 53px;
+      //   line-height: 53px;
+      //   color: #fff;
+      //   font-weight: 700;
+      //   font-size: $text_s;
+      // }
     }
+  }
+  &__add_proposal {
+    width: 100%;
+    background-color: #00b050;
+    border-radius: 7px;
+    height: 53px;
+    line-height: 53px;
+    color: #fff;
+    font-weight: 700;
+    font-size: $text_s;
   }
 }
 // @media (min-width: 390px) {

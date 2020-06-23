@@ -32,12 +32,15 @@ const routes = [
   },
   {
     path: '/editConference',
-    name: 'schedule',
+    name: 'editConference',
     component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/EditConferenceChoose.vue'),
+    meta:{
+      title:'編輯會議'
+    }
   },
   {
     path: '/editConference/:delibrationID',
-    name: 'schedule',
+    name: 'editSchedule',
     component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/EditConferenceSchedule.vue'),
   },
   {

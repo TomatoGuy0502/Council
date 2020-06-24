@@ -41,20 +41,21 @@ const routes = [
   {
     path: '/editConference',
     name: 'editConference',
-    component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/EditConferenceChoose.vue'),
+    component: () => import(/* webpackChunkName: "EditConferenceChoose" */ '../views/EditConferenceChoose.vue'),
     meta:{
-      title:'編輯會議'
+      title:'編輯會議',
+      requiresAuth: true
     }
   },
   {
     path: '/editConference/:delibrationID',
     name: 'editSchedule',
-    component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/EditConferenceSchedule.vue'),
+    component: () => import(/* webpackChunkName: "EditConferenceSchedule" */ '../views/EditConferenceSchedule.vue'),
   },
   {
     path: '/vote',
     name: 'vote',
-    component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../components/VoteDetailWindow.vue'),
+    component: () => import(/* webpackChunkName: "VoteDetailWindow" */ '../components/VoteDetailWindow.vue'),
   },
   {
     path: '/conference/:delibrationID/proposal/:proposalID',
@@ -76,12 +77,16 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.path !== '/login' && !store.state.userInfo.isLogin) {
+  if(!store.state.userInfo.isLogin && to.path !== '/login') {
     next({ path: '/login' })
-  } else if(to.path === '/login' && store.state.userInfo.isLogin) {
+  } else if(store.state.userInfo.isLogin && to.path === '/login') {
     next({ path: '/', replace: true})
   } else {
-    next()
+    if(to.matched.some(record => record.meta.requiresAuth) && store.state.userInfo.position!=='leader') {
+      next({ path: '/' })
+    } else {
+      next()
+    }
   }
 })
 

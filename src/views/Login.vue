@@ -32,7 +32,7 @@ export default {
       if(this.studentID!=='' && this.password!=='') {
         let response = await login(studentID, password);
         if (response.data.isLogin === "success") {
-          store.dispatch('login')
+          await store.dispatch('login', response.data.position)
           router.push({name: 'home'})
         } else {
           this.$emit('handle-error-window', "open", "login")

@@ -1,6 +1,13 @@
-const user = {
-    studentID: 'H00000000'
-}
+const users = [
+  {
+    studentID: 'H00000000',
+    position: 'leader'
+  },
+  {
+    studentID: 'H00000001',
+    position: 'normal'
+  },
+]
 
 
 export default [
@@ -10,17 +17,19 @@ export default [
         url: '/user/login',
         type: 'post',
         response: req => {
-            let request = JSON.parse(req.body)
-            let studentID = request.studentID
-            if (user.studentID === studentID) {
-                return {
-                    isLogin: "success"
-                }
-            } else {
-                return {
-                    isLogin: "fail"
-                }
+          let request = JSON.parse(req.body)
+          let studentID = request.studentID
+          for(let user of users) {
+            if(user.studentID === studentID) {
+              return {
+                isLogin: "success",
+                position: user.position
+              }
             }
+          }
+          return {
+            isLogin: "fail"
+          }
         }
     },
     // User Sign In

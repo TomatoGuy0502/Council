@@ -9,6 +9,7 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
+import store from '../store'
 
 export default {
   name: 'Home',
@@ -19,12 +20,17 @@ export default {
         ["選舉系統",""],
         ["近期議案",""],
         ["會議記錄",""],
-        // ["法規查詢",""],
-        ["編輯會議","/editConference"],
+        ["法規查詢",""],
+        // ["編輯會議","/editConference"],
         ["加入會議","/conference"]
       ]
     }
   },
+  created() {
+    if( store.state.userInfo.position === "leader" ){
+      this.home_link[4] = ["編輯會議","/editConference"]
+    }
+  }
 }
 </script>
 

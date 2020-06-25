@@ -7,4 +7,9 @@ module.exports = {
     }
   },
   publicPath:'./',  //輸出於dist時能夠正常用file://方式瀏覽
+  // devServer: {
+  //   public: '0.0.0.0:8080',
+  //   hot: true,
+  //   disableHostCheck: true,
+  // },
 };

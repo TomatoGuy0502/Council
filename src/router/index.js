@@ -51,6 +51,9 @@ const routes = [
     path: '/editConference/:delibrationID',
     name: 'editSchedule',
     component: () => import(/* webpackChunkName: "EditConferenceSchedule" */ '../views/EditConferenceSchedule.vue'),
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: '/vote',

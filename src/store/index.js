@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { delibration } from "../api/delibration";
 
 Vue.use(Vuex)
 
@@ -8,23 +9,43 @@ export default new Vuex.Store({
     userInfo: {
       isLogin: false,
       position: ''
-    }
+    },
+    errorInfo: {
+      showError: false,
+      errorType: 'login'
+    },
+    delibrationInfo: {
+      semester: 0,
+      period: 0,
+      name: ''
+    },
+    delibrations: []
   },
   mutations: {
-    login(state, position) {
-      state.userInfo.isLogin = true;
-      state.userInfo.position = position;
+    setUserInfo(state, position) {
+      state.userInfo = {
+        isLogin: true,
+        position
+      }
     },
-    getUserInfo(state) {
-      return state.userInfo;
+    setErrorWindow(state, {showError = false, errorType = ''}) {
+      state.errorInfo = {
+        showError, errorType 
+      }
+    },
+    setDelibrations(state, delibrations) {
+      state.delibrations = delibrations
+    },
+    setDelibrationInfo(state, {semester, period, name}) {
+      state.delibrationInfo = {
+        semester, period, name
+      }
     }
   },
   actions: {
-    login ({commit}, position) {
-      commit('login', position)
-    },
-    getUserInfo({commit}) {
-      commit('getUserInfo')
+    async setDelibrations({commit}) {
+      let response = await delibration()
+      commit('setDelibrations', response.data)
     }
   },
   modules: {

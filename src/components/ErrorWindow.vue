@@ -1,6 +1,6 @@
 <template>
   <div class="error_window container window">
-    <div class="close_layer" @click="$emit('close-window')"></div>
+    <div class="close_layer" @click="setErrorWindow({})"></div>
     <div class="error_container">
       <span class="error_block">錯 誤</span>
       <p class="error_message">{{errorMessage}}</p>
@@ -10,11 +10,10 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
   name: 'ErrorWindow',
-  props: {
-    errorType: String,
-  },
   data() {
     return {
     }
@@ -24,8 +23,17 @@ export default {
       return {
         "login": "帳號或密碼錯誤，請重新嘗試",
         "notAvailable": "會議簽到未開放/已過期",
-      }[this.errorType]
-    }
+        "cantVote": "議案尚未開放投票，請稍後再試"
+      }[this.errorInfo.errorType]
+    },
+    ...mapState([
+      'errorInfo'
+    ])
+  },
+  methods: {
+    ...mapMutations([
+      'setErrorWindow'
+    ])
   }
 }
 </script>

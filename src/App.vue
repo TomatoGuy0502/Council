@@ -1,18 +1,10 @@
 <template>
   <div id="app">
-    <Navbar :semester="semester" :period="period" :name="name"/>
+    <Navbar/>
     <div id="main" class="container">
-      <router-view 
-        @update-title="updateTitle1" 
-        @handle-error-window="handleErrorWindow"
-      />
+      <router-view/>
     </div>
-    <ErrorWindow 
-      v-if="errorInfo.showError" 
-      :errorType="errorInfo.errorType" 
-      @close-window="errorInfo.showError=false"
-    />
-    <!-- <VoteWindow/> -->
+    <ErrorWindow v-if="errorInfo.showError"/>
     <Footer/>
   </div>
 </template>
@@ -21,9 +13,8 @@
 import Navbar from '@/layout/components/Navbar.vue'
 import Footer from '@/layout/components/Footer.vue'
 import ErrorWindow from "@/components/ErrorWindow.vue";
-// import VoteWindow from '@/components/VoteWindow.vue'
 // import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
-// import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'app',
@@ -31,34 +22,23 @@ export default {
     Navbar,
     Footer,
     ErrorWindow,
-    // VoteWindow,
   },
   data(){
     return {
-      semester: 0,
-      period: 0,
-      name: '成大學代會',
-      errorInfo: {
-        showError: false,
-        errorType: 'login'
-      }
     }
   },
+  created() {
+    this.setDelibrations()
+  },
+  computed: {
+    ...mapState([
+      'errorInfo',
+    ])
+  },
   methods: {
-    updateTitle1(semester, period, name) {
-      // console.log(semester, period, name)
-      this.semester = semester
-      this.period = period
-      this.name = name
-    },
-    handleErrorWindow(method, type) {
-      if(method === "open") {
-        this.errorInfo.showError = true
-        this.errorInfo.errorType = type
-      } else {
-        this.errorInfo.showError = false
-      }
-    }
+    ...mapActions([
+      'setDelibrations'
+    ])
   }
 }
 </script>
@@ -86,11 +66,6 @@ export default {
     max-width: 510px;
   }
 }
-// @media (min-width: 989px) {
-//   #main{
-//     min-width: 880px;
-//   }
-// }
 
 .container{
   width: 100%; 

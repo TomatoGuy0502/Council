@@ -1,20 +1,10 @@
 <template>
   <div class="conference_choose">
-    <!-- <LoginWindow
-      :delibrationID="delibrationID"
-      :semester="semester"
-      :period="period"
-      :name="name"
-      :startTime="startTime"
-      :position="position"
-      v-if="LOGIN_SHOW"
-      @close-window="LOGIN_SHOW = 0"
-    /> -->
     <p>請 選 擇 會 議</p>
     <div class="conference_list">
       <div
-        v-for="(item,index) in conferenceList"
-        :key="index"
+        v-for="item in delibrations"
+        :key="item.delibrationID"
         class="conference_item"
         @click="joinDelibration(item)"
       >
@@ -30,52 +20,33 @@
 </template>
 
 <script>
-// import LoginWindow from "@/components/LoginWindow.vue";
-import { delibration } from "../api/delibration";
 import router from '@/router'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: "ConferenceChoose",
   components: {
-    // LoginWindow,
   },
   data() {
     return {
-      conferenceList: [],
-      delibrationID: '',
-      semester: 0,
-      period: 0,
-      name: "",
-      startTime: "",
-      position: "",
-      LOGIN_SHOW: 0
     };
   },
-  created() {
-    this.getDelibration();
+  computed: {
+    ...mapState([
+      'delibrations'
+    ])
   },
   methods: {
-    async getDelibration() {
-      let response = await delibration();
-      this.conferenceList = response.data;
-    },
+    ...mapMutations([
+      'setDelibrationInfo'
+    ]),
     convertNumber(num) {
       return ["一","二","三","四","五","六","七","八","九","十"][num-1];
     },
     joinDelibration({delibrationID, semester, period, name}) {
-      this.$emit('update-title', semester, period, name)
+      this.setDelibrationInfo({semester, period, name})
       router.push({name: 'schedule', params: {delibrationID:delibrationID}})
-    },
-    // openLoginWindow({delibrationID, semester, period, name, startTime, position}) {
-    //   this.$emit('update-title', semester, period, name)
-    //   this.delibrationID = delibrationID
-    //   this.semester = semester
-    //   this.period = period
-    //   this.name = name
-    //   this.startTime = startTime
-    //   this.position = position
-    //   this.LOGIN_SHOW = 1
-    // }
+    }
   }
 };
 </script>

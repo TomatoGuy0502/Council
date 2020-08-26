@@ -1,41 +1,44 @@
 <template>
   <div class="home">
-    <router-link :to="item[1]" tag="div" class="home__block_link" :class="{unopened : !item[1]}" v-for="(item, index) in home_link" :key="index">
-      {{item[0]}}
+    <router-link
+      tag="div"
+      class="home__block_link"
+      v-for="item in home_link"
+      :class="{ unopened: !item[1] }"
+      :to="item[1]"
+      :key="item[0]"
+    >
+      {{ item[0] }}
     </router-link>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-import store from '../store'
-
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
-      'home_link':[
-        ["公共提案",""],
-        ["選舉系統",""],
-        ["近期議案",""],
-        ["會議記錄",""],
-        ["法規查詢",""],
+      home_link: [
+        ["公共提案", ""],
+        ["選舉系統", ""],
+        ["近期議案", ""],
+        ["會議記錄", ""],
+        ["法規查詢", ""],
         // ["編輯會議","/editConference"],
-        ["加入會議","/conference"]
+        ["加入會議", "/conference"]
       ]
-    }
+    };
   },
   created() {
-    if( store.state.userInfo.position === "leader" ){
-      this.home_link[4] = ["編輯會議","/editConference"]
+    if (this.$store.state.userInfo.position === "leader") {
+      this.home_link[4] = ["編輯會議", "/editConference"];
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
-.home{
+.home {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,7 +56,7 @@ export default {
 //     min-width: 860px;
 //   }
 // }
-.home__block_link{
+.home__block_link {
   width: 120px;
   height: 120px;
   padding: 10px;
@@ -66,12 +69,12 @@ export default {
   color: #fff;
   font-size: $text_l;
   font-weight: 700;
-  &.unopened{
+  &.unopened {
     position: relative;
-    &::after{
+    &::after {
       position: absolute;
-      width: 124px;   //比原本的大一點，底層才不會走光
-      height: 124px; 
+      width: 124px; //比原本的大一點，底層才不會走光
+      height: 124px;
       top: -2px;
       left: -2px;
       background-color: #ffffffcc;

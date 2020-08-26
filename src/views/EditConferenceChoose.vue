@@ -1,15 +1,5 @@
 <template>
   <div class="conference_choose">
-    <LoginWindow
-      :delibrationID="delibrationID"
-      :semester="semester"
-      :period="period"
-      :name="name"
-      :startTime="startTime"
-      :position="position"
-      v-if="showLogin"
-      @close-window="showLogin = 0"
-    />
     <WarnWindow 
       :semester="semester"
       :period="period"
@@ -22,10 +12,10 @@
     <p>請 選 擇 會 議</p>
     <div class="conference_list">
       <div
-        v-for="(item,index) in conferenceList"
-        :key="index"
+        v-for="(item,index) in delibrations"
+        :key="item.delibrationID"
         class="conference_item"
-        @click="openLoginWindow(item)"
+        @click="joinDelibration(item)"
       >
         <div class="item_block">
           <h3 class="item_block__session">{{item.semester}}學年度第{{convertNumber(item.period)}}學期</h3>
@@ -43,39 +33,34 @@
 </template>
 
 <script>
-import LoginWindow from "@/components/LoginWindow.vue";
 import WarnWindow from "@/components/WarnWindow.vue";
-import { delibration } from "../api/delibration";
 import router from "@/router";
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: "ConferenceChoose",
   components: {
-    LoginWindow,
     WarnWindow
   },
   data() {
     return {
-      conferenceList: [],
-      delibrationID: "",
       semester: 0,
       period: 0,
       name: "",
-      startTime: "",
-      position: "",
       deleteIndex: 0,
       showLogin: 0,
       showWarning: 0
     };
   },
-  created() {
-    this.getDelibration();
+  computed: {
+    ...mapState([
+      'delibrations'
+    ])
   },
   methods: {
-    async getDelibration() {
-      let response = await delibration();
-      this.conferenceList = response.data;
-    },
+    ...mapMutations([
+      'setDelibrationInfo'
+    ]),
     deleteDelibration(deleteIndex) {
       this.showWarning = 0;
       this.conferenceList.splice(deleteIndex, 1);
@@ -84,15 +69,9 @@ export default {
     convertNumber(num) {
       return ["一","二","三","四","五","六","七","八","九","十"][num-1];
     },
-    openLoginWindow({delibrationID, semester, period, name, startTime, position}) {
-      this.$emit("update-title", semester, period, name);
-      this.delibrationID = delibrationID;
-      this.semester = semester;
-      this.period = period;
-      this.name = name;
-      this.startTime = startTime;
-      this.position = position;
-      this.showLogin = 1;
+    joinDelibration({delibrationID, semester, period, name}) {
+      this.setDelibrationInfo({semester, period, name})
+      router.push({name: 'schedule', params: {delibrationID:delibrationID}})
     },
     openWarningWindow({semester, period, name}, deleteIndex) {
       this.semester = semester;
@@ -102,7 +81,7 @@ export default {
       this.showWarning = 1;
     },
     editSchedule({ delibrationID, semester, period, name }) {
-      this.$emit("update-title", semester, period, name);
+      this.setDelibrationInfo({semester, period, name})
       router.push({
         name: "editSchedule",
         params: { delibrationID: delibrationID }
@@ -115,7 +94,6 @@ export default {
 <style lang="scss">
 .conference_choose {
   width: 100%;
-  // flex-grow: 1;
   & > p {
     color: #000;
     font-size: $text_s;

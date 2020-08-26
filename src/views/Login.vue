@@ -16,8 +16,8 @@
 
 <script>
 import { login } from "../api/user"
-import store from '../store'
 import router from '@/router'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Login',
@@ -27,15 +27,24 @@ export default {
       password: '',
     }
   },
+  computed: {
+    ...mapState([
+      'errorInfo'
+    ])
+  },
   methods: {
+    ...mapMutations([
+      'setErrorWindow',
+      'setUserInfo'
+    ]),
     async login(studentID, password) {
       if(this.studentID!=='' && this.password!=='') {
         let response = await login(studentID, password);
         if (response.data.isLogin === "success") {
-          await store.dispatch('login', response.data.position)
+          this.setUserInfo(response.data.position)
           router.push({name: 'home'})
         } else {
-          this.$emit('handle-error-window', "open", "login")
+          this.setErrorWindow({showError: true, errorType: 'login'})
         }
       }
     },

@@ -68,6 +68,16 @@ export default [
             return proposal
         }
     },
+    {
+        url: '/proposal/createVote',
+        method: 'get',
+        response: () => {
+            return {
+                "caseID": 38664,
+                "caseName": "修正動議投票"
+            }
+        }
+    },
     //針對當前議案進行記名投票 /proposal/vote
     {
         url: '/proposal/vote',

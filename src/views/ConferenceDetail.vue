@@ -3,15 +3,6 @@
     <div class="schedule_block">
       <h3 class="schedule_block__title">四、議案與討論事項</h3>
     </div>
-    <!-- <div class="detail_table">
-      <div class="row">
-        <div class="case_number"></div>
-        <div class="case_proposer"></div>
-      </div>
-      <div class="row"></div>
-      <div class="row"></div>
-      <div class="row"></div>
-    </div> -->
     <table class="detail_table">
       <tr class="case_info">
         <td class="title" width="25px">案次</td>
@@ -34,36 +25,75 @@
         <td colspan="3" align="left">{{proposal.discussion}}</td>
       </tr>
     </table>
-    <VoteWindow style="display:none"/>
+
+    <VoteWindow v-show="showVoteWindow" @vote="vote"/>
+
+    <LeaderVoteWindow 
+      v-if="showLeaderVoteWindow" 
+      @create-success="voteIsOpen=true" 
+    />
+    <div class="toggle_btns">
+      <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
+      <div class="toggle_btns__vote" :class="{ is_open: showVoteWindow }" @click="toggleVoteWindow">投</div>
+    </div>
     <VoteDetailWindow style="display:none"/>
   </div>
 </template>
 
 <script>
 import VoteWindow from '@/components/VoteWindow.vue'
+import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
 import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
-import { proposalID } from '../api/proposal'
+import { proposalID, vote } from '../api/proposal'
 
 export default {
   name: 'ConferenceDetail',
   components: {
     VoteWindow,
+    LeaderVoteWindow,
     VoteDetailWindow,
   },
   data() {
     return{
       proposal: {},
+      isLeader: false,
+      voteIsOpen: false,
+      showVoteWindow: false,
+      showLeaderVoteWindow: false
     }
   },
   created() {
-    this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
+    this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID);
+    this.checkPosition();
   },
   methods: {
     async getProposalDetail(dID, pID) {
       let response = await proposalID(dID, pID);
       this.proposal = response.data;
     },
-  }
+    async vote(caseID, studentID, result) {
+      let response = await vote(caseID, studentID, result);
+      console.log(response);
+    },
+    checkPosition() {
+      if(this.$store.state.userInfo.position === 'leader') {
+        this.isLeader = true;
+        this.showLeaderVoteWindow = true;
+      }
+    },
+    toggleLeaderWindow() {
+      this.showLeaderVoteWindow = !this.showLeaderVoteWindow;
+    },
+    toggleVoteWindow() {
+      if(this.voteIsOpen)
+        this.showVoteWindow = !this.showVoteWindow;
+      else {
+        //發出request，查看議案是否開放投票
+
+        this.$emit('handle-error-window', "open", "cantVote")
+      }
+    }
+  },
 }
 </script>
 
@@ -95,4 +125,27 @@ export default {
     margin-bottom: 10px;
   }
 }
+
+.toggle_btns {
+  user-select: none;
+  z-index: 1;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  div {
+    cursor: pointer;
+    // color: #fff;
+    font-weight: 700;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    border: 3px solid #3b3838;
+    margin: 0 5px 0 0;
+    &.is_open {
+      background-color: #808080;
+    }
+  }
+}
+
 </style>

@@ -14,9 +14,21 @@
       <div class="schedule_block">
         <h4 class="schedule_block__title">四、議案與討論事項</h4>
         <div class="schedule_block__detail">
-          <div v-for="(proposal, index) in proposalList" :key="index" class="case">
-            <router-link :to="{name: 'detail',params: {proposalID:proposal.proposalID}}" tag="div" class="case__number">第{{convertNumber(index+1)}}案</router-link>
-            <div class="case__proposer">{{proposal.sponsor}}</div>
+          <div
+            v-for="(proposal, index) in proposalList"
+            :key="proposal.proposalID"
+            class="case"
+          >
+            <router-link
+              :to="{
+                name: 'detail',
+                params: { proposalID: proposal.proposalID }
+              }"
+              tag="div"
+              class="case__number"
+              >第{{ convertNumber(index + 1) }}案
+            </router-link>
+            <div class="case__proposer">{{ proposal.sponsor }}</div>
           </div>
         </div>
       </div>
@@ -34,7 +46,7 @@
 </template>
 
 <script>
-import {delibrationID} from '../api/proposal'
+import { delibrationID } from "../api/proposal";
 
 export default {
   name: "ConferenceSchedule",
@@ -43,25 +55,27 @@ export default {
   },
   data() {
     return {
-      proposalList: [],
+      proposalList: []
     };
   },
   created() {
-    this.getProposal(this.$route.params.delibrationID)
+    this.getProposal(this.$route.params.delibrationID);
   },
   methods: {
     async getProposal(dID) {
-      let response = await delibrationID(dID)
-      this.proposalList = response.data
+      let response = await delibrationID(dID);
+      this.proposalList = response.data;
     },
     convertNumber(num) {
-      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
-    },
+      return ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"][
+        num - 1
+      ];
+    }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .conference_schedule {
   width: 100%;
 }
@@ -143,8 +157,4 @@ export default {
     }
   }
 }
-
-// .schedule_title{
-
-// }
 </style>

@@ -2,9 +2,9 @@
   <div class="vote_detail_window">
     <h3 class="vote_topic">第一案 決議投票</h3>
     <div class="vote_block">
-      <div class="vote_button agree_vote" style="cursor:none">同意</div>
-      <div class="vote_button against_vote" style="cursor:none">反對</div>
-      <div class="vote_button null_vote" style="cursor:none">廢票</div>
+      <div class="vote_button agree_vote">同意</div>
+      <div class="vote_button against_vote">反對</div>
+      <div class="vote_button null_vote">廢票</div>
     </div>
     <div class="vote_result">
       <div class="vote_result__item">
@@ -196,6 +196,7 @@ export default {
   methods: {
     async getVoteResults(caseID) {
       let response = await voteResults(caseID);
+      console.log(response.data)
       this.voteResult = response.data;
       // this.caseName = response.data.caseName
       // this.result = response.data.result

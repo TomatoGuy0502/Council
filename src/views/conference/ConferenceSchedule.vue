@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { delibrationID } from "../api/proposal";
+import { delibrationID } from "@/api/proposal";
 
 export default {
   name: "ConferenceSchedule",

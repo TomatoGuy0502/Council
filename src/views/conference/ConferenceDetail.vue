@@ -44,7 +44,7 @@
 import VoteWindow from '@/components/VoteWindow.vue'
 import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
 import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
-import { proposalID, vote } from '../api/proposal'
+import { proposalID, vote } from '@/api/proposal'
 
 export default {
   name: 'ConferenceDetail',

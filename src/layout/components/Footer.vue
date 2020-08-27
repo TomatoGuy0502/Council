@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <p>國立成功大學學生代表大會議事系統</p>
+    <p>成大學代大會議事系統</p>
   </div>
 </template>
 

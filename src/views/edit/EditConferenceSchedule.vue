@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import {getEditDelibration} from '../api/delibration'
+import {getEditDelibration} from '@/api/delibration'
 
 export default {
   name: "ConferenceSchedule",

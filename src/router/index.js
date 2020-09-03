@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import store from '../store'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,14 @@ const routes = [
     component: Login,
     meta:{
       title:'登入系統'
+    }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta:{
+      title:'註冊帳號'
     }
   },
   {
@@ -81,9 +90,18 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(!store.state.userInfo.isLogin && to.path !== '/login') {
-    next({ path: '/login' })
-  } else if(store.state.userInfo.isLogin && to.path === '/login') {
+  if(!store.state.userInfo.isLogin) {
+    switch (to.path) {
+      case '/login':
+        next()
+        break
+      case '/register':
+        next()
+        break
+      default:
+        next({ path: '/login' })
+    }
+  } else if(to.path === '/login') {
     next({ path: '/', replace: true})
   } else {
     if(to.matched.some(record => record.meta.requiresAuth) && store.state.userInfo.position!=='leader') {

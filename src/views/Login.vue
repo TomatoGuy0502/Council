@@ -1,6 +1,6 @@
 <template>
   <div class="Login">
-    <div class="login_form" @submit.prevent>
+    <div class="login_form" @submit.prevent="login">
       <div class="login_form__account">
         <label for="account">帳 號</label>
         <input class="input" id="account" v-model.trim="studentID" type="text" placeholder="學號(H00000000)" @keyup.13="login(studentID, password)" required>
@@ -9,7 +9,10 @@
         <label for="password">密 碼</label>
         <input class="input" id="password" v-model.trim="password" type="password" placeholder="密碼(隨便打)" @keyup.13="login(studentID, password)" required>
       </div>
-      <button class="login_form__enter" @click="login(studentID, password)">登 入</button>
+      <div class="login_btn_container">
+        <button class="login_form__btn" :class="{isValid}" type="submit" @click="login(studentID, password)">登 入</button>
+        <button class="login_form__btn" @click="toRegister">註 冊</button>
+      </div>
     </div>
   </div>
 </template>
@@ -30,16 +33,19 @@ export default {
   computed: {
     ...mapState([
       'errorInfo'
-    ])
+    ]),
+    isValid() {
+      return !!(this.studentID && this.password)
+    }
   },
   methods: {
     ...mapMutations([
       'setErrorWindow',
       'setUserInfo'
     ]),
-    async login(studentID, password) {
+    async login() {
       if(this.studentID!=='' && this.password!=='') {
-        let response = await login(studentID, password);
+        let response = await login(this.studentID, this.password);
         if (response.data.isLogin === "success") {
           this.setUserInfo(response.data.position)
           router.push({name: 'home'})
@@ -48,6 +54,9 @@ export default {
         }
       }
     },
+    toRegister() {
+      router.push({name: 'register'})
+    }
   }
 }
 </script>
@@ -71,7 +80,7 @@ export default {
     padding: 10px 5px;
     background-color: #ffffff00;
   }
-  &__enter{
+  &__btn{
     background-color: $primary;
     border-radius: 7px;
     border: none;
@@ -82,5 +91,13 @@ export default {
     margin: 0;
     cursor: pointer;
   }
+}
+.login_btn_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+[type="submit"]:not(.isValid) {
+  background-color: gray;
 }
 </style>

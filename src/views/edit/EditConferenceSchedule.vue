@@ -15,7 +15,7 @@
       <div class="schedule_block">
         <h4 class="schedule_block__title">四、議案與討論事項</h4>
         <div class="schedule_block__detail">
-          <div v-for="(proposal, index) in proposalList" :key="index" class="case">
+          <div v-for="(proposal, index) in proposalList" :key="proposal.proposalID" class="case">
             <div class="case__header">
               <div class="case__number">第{{convertNumber(index+1)}}案</div>
               <div class="case__delete" @click="deleteProposal(index)">刪除</div>
@@ -82,7 +82,10 @@ export default {
       return ["一","二","三","四","五","六","七","八","九","十"][num-1];
     },
     addNewProposal() {
+      const lastId = this.proposalList[this.proposalList.length - 1].proposalID
+
       this.proposalList.push({
+        "proposalID": lastId + 1,
         "dept": "",
         "reason": "",
         "description": "",

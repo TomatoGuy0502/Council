@@ -45,6 +45,7 @@ import VoteWindow from '@/components/VoteWindow.vue'
 import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
 import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
 import { proposalID, vote } from '@/api/proposal'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'ConferenceDetail',
@@ -67,6 +68,9 @@ export default {
     this.checkPosition();
   },
   methods: {
+    ...mapMutations([
+      'setErrorWindow',
+    ]),
     async getProposalDetail(dID, pID) {
       let response = await proposalID(dID, pID);
       this.proposal = response.data;
@@ -82,15 +86,21 @@ export default {
       }
     },
     toggleLeaderWindow() {
+      if(!this.showLeaderVoteWindow && this.showVoteWindow) {
+        this.showVoteWindow = false
+      }
       this.showLeaderVoteWindow = !this.showLeaderVoteWindow;
     },
     toggleVoteWindow() {
-      if(this.voteIsOpen)
-        this.showVoteWindow = !this.showVoteWindow;
-      else {
+      if(this.voteIsOpen) {
+        this.showVoteWindow = !this.showVoteWindow
+        if(this.showLeaderVoteWindow) {
+          this.showLeaderVoteWindow = false
+        }
+      } else {
         //發出request，查看議案是否開放投票
 
-        this.$emit('handle-error-window', "open", "cantVote")
+        this.setErrorWindow({showError: true, errorType: 'cantVote'})
       }
     }
   },

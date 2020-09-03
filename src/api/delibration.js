@@ -37,3 +37,13 @@ export const getEditDelibration = (delibrationID) => {
     method: 'get'
   })
 }
+
+export const saveEditDelibration = (delibrationID, proposal) => {
+  return Request({
+    url: '/delibration/saveEditDelibration/' + delibrationID,
+    data: {
+      proposal
+    },
+    method: 'post'
+  })
+}

@@ -41,11 +41,13 @@ export default [
             "period": 1,
             "proposal": [
                 {
+                  "proposalID": 1,
                   "dept": "學生會1",
                   "reason": "for fun",
                   "description": "just fun",
                   "discussion": "nothing"
                 },{
+                  "proposalID": 2,
                   "dept": "學生會2",
                   "reason": "for fun",
                   "description": "just fun",

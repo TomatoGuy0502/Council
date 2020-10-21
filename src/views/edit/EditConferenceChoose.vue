@@ -15,14 +15,14 @@
         v-for="(item,index) in delibrations"
         :key="item.delibrationID"
         class="conference_item"
-        @click="joinDelibration(item)"
+        @click="editSchedule(item)"
       >
         <div class="item_block">
           <h3 class="item_block__session">{{item.semester}}學年度第{{convertNumber(item.period)}}學期</h3>
           <h2 class="item_block__name">{{item.name}}</h2>
           <div class="item_block__time">{{item.startTime}} 開放登入</div>
           <div class="item_block__edit">
-            <div @click.stop="editSchedule(item)">編輯</div>
+            <div @click.stop="">編輯</div>
             <div @click.stop="openWarningWindow(item, index)">刪除</div>
           </div>
         </div>
@@ -68,10 +68,6 @@ export default {
     },
     convertNumber(num) {
       return ["一","二","三","四","五","六","七","八","九","十"][num-1];
-    },
-    joinDelibration({delibrationID, semester, period, name}) {
-      this.setDelibrationInfo({semester, period, name})
-      router.push({name: 'schedule', params: {delibrationID:delibrationID}})
     },
     openWarningWindow({semester, period, name}, deleteIndex) {
       this.semester = semester;

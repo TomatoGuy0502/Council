@@ -6,11 +6,11 @@ import proposal from './proposal'
 const baseUrl = '/api'
 
 const mocks = [
-    ...user,
-    ...delibration,
-    ...proposal
+  ...user,
+  ...delibration,
+  ...proposal
 ]
 
 for (const i of mocks) {
-    Mock.mock(baseUrl + i.url, i.type || i.method, i.response)
+  Mock.mock(baseUrl + i.url, i.type || i.method, i.response)
 }

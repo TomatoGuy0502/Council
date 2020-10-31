@@ -12,24 +12,24 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-    meta:{
-      title:'成大學代會'
+    meta: {
+      title: '成大學代會'
     }
   },
   {
     path: '/login',
     name: 'login',
     component: Login,
-    meta:{
-      title:'登入系統'
+    meta: {
+      title: '登入系統'
     }
   },
   {
     path: '/register',
     name: 'register',
     component: Register,
-    meta:{
-      title:'註冊帳號'
+    meta: {
+      title: '註冊帳號'
     }
   },
   {
@@ -39,21 +39,21 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "ConferenceChoose" */ '../views/conference/ConferenceChoose.vue'),
-    meta:{
-      title:'加入會議'
+    meta: {
+      title: '加入會議'
     }
   },
   {
     path: '/conference/:delibrationID',
     name: 'schedule',
-    component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/conference/ConferenceSchedule.vue'),
+    component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/conference/ConferenceSchedule.vue')
   },
   {
     path: '/editConference',
     name: 'editConference',
     component: () => import(/* webpackChunkName: "EditConferenceChoose" */ '../views/edit/EditConferenceChoose.vue'),
-    meta:{
-      title:'編輯會議',
+    meta: {
+      title: '編輯會議',
       requiresAuth: true
     }
   },
@@ -61,36 +61,36 @@ const routes = [
     path: '/editConference/:delibrationID',
     name: 'editSchedule',
     component: () => import(/* webpackChunkName: "EditConferenceSchedule" */ '../views/edit/EditConferenceSchedule.vue'),
-    meta:{
+    meta: {
       requiresAuth: true
     }
   },
   {
     path: '/vote',
     name: 'vote',
-    component: () => import(/* webpackChunkName: "VoteDetailWindow" */ '../components/VoteDetailWindow.vue'),
+    component: () => import(/* webpackChunkName: "VoteDetailWindow" */ '../components/VoteDetailWindow.vue')
   },
   {
     path: '/conference/:delibrationID/proposal/:proposalID',
     name: 'detail',
-    component: () => import(/* webpackChunkName: "ConferenceDetail" */ '../views/conference/ConferenceDetail.vue'),
+    component: () => import(/* webpackChunkName: "ConferenceDetail" */ '../views/conference/ConferenceDetail.vue')
   }
 ]
 
 const router = new VueRouter({
   routes,
   store,
-  scrollBehavior(to, from, savedPosition) {
-    if(savedPosition){
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
       return savedPosition
     } else {
-      return { x:0 ,y:0 }
+      return { x: 0, y: 0 }
     }
   }
 })
 
 router.beforeEach((to, from, next) => {
-  if(!store.state.userInfo.isLogin) {
+  if (!store.state.userInfo.isLogin) {
     switch (to.path) {
       case '/login':
         next()
@@ -101,10 +101,10 @@ router.beforeEach((to, from, next) => {
       default:
         next({ path: '/login' })
     }
-  } else if(to.path === '/login') {
-    next({ path: '/', replace: true})
+  } else if (to.path === '/login') {
+    next({ path: '/', replace: true })
   } else {
-    if(to.matched.some(record => record.meta.requiresAuth) && store.state.userInfo.position!=='leader') {
+    if (to.matched.some(record => record.meta.requiresAuth) && store.state.userInfo.position !== 'leader') {
       next({ path: '/' })
     } else {
       next()

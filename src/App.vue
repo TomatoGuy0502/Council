@@ -12,7 +12,7 @@
 <script>
 import Navbar from '@/layout/components/Navbar.vue'
 import Footer from '@/layout/components/Footer.vue'
-import ErrorWindow from "@/components/ErrorWindow.vue";
+import ErrorWindow from '@/components/ErrorWindow.vue'
 // import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
 import { mapState, mapActions } from 'vuex'
 
@@ -21,18 +21,18 @@ export default {
   components: {
     Navbar,
     Footer,
-    ErrorWindow,
+    ErrorWindow
   },
-  data(){
+  data () {
     return {
     }
   },
-  created() {
+  created () {
     this.setDelibrations()
   },
   computed: {
     ...mapState([
-      'errorInfo',
+      'errorInfo'
     ])
   },
   methods: {
@@ -68,7 +68,7 @@ export default {
 }
 
 .container{
-  width: 100%; 
+  width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;

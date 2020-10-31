@@ -14,16 +14,16 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'ErrorWindow',
-  data() {
+  data () {
     return {
     }
   },
   computed: {
-    errorMessage: function() {
+    errorMessage: function () {
       return {
-        "login": "帳號或密碼錯誤，請重新嘗試",
-        "notAvailable": "會議簽到未開放/已過期",
-        "cantVote": "議案尚未開放投票，請稍後再試"
+        login: '帳號或密碼錯誤，請重新嘗試',
+        notAvailable: '會議簽到未開放/已過期',
+        cantVote: '議案尚未開放投票，請稍後再試'
       }[this.errorInfo.errorType]
     },
     ...mapState([

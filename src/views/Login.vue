@@ -18,23 +18,23 @@
 </template>
 
 <script>
-import { login } from "../api/user"
+import { login } from '../api/user'
 import router from '@/router'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Login',
-  data() {
-    return{
+  data () {
+    return {
       studentID: '',
-      password: '',
+      password: ''
     }
   },
   computed: {
     ...mapState([
       'errorInfo'
     ]),
-    isValid() {
+    isValid () {
       return !!(this.studentID && this.password)
     }
   },
@@ -43,19 +43,19 @@ export default {
       'setErrorWindow',
       'setUserInfo'
     ]),
-    async login() {
-      if(this.studentID!=='' && this.password!=='') {
-        let response = await login(this.studentID, this.password);
-        if (response.data.isLogin === "success") {
+    async login () {
+      if (this.studentID !== '' && this.password !== '') {
+        const response = await login(this.studentID, this.password)
+        if (response.data.isLogin === 'success') {
           this.setUserInfo(response.data.position)
-          router.push({name: 'home'})
+          router.push({ name: 'home' })
         } else {
-          this.setErrorWindow({showError: true, errorType: 'login'})
+          this.setErrorWindow({ showError: true, errorType: 'login' })
         }
       }
     },
-    toRegister() {
-      router.push({name: 'register'})
+    toRegister () {
+      router.push({ name: 'register' })
     }
   }
 }

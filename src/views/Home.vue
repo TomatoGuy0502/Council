@@ -15,26 +15,26 @@
 
 <script>
 export default {
-  name: "Home",
-  data() {
+  name: 'Home',
+  data () {
     return {
       home_link: [
-        ["公共提案", ""],
-        ["選舉系統", ""],
-        ["近期議案", ""],
-        ["會議記錄", ""],
-        ["法規查詢", ""],
+        ['公共提案', ''],
+        ['選舉系統', ''],
+        ['近期議案', ''],
+        ['會議記錄', ''],
+        ['法規查詢', ''],
         // ["編輯會議","/editConference"],
-        ["加入會議", "/conference"]
+        ['加入會議', '/conference']
       ]
-    };
+    }
   },
-  created() {
-    if (this.$store.state.userInfo.position === "leader") {
-      this.home_link[4] = ["編輯會議", "/editConference"];
+  created () {
+    if (this.$store.state.userInfo.position === 'leader') {
+      this.home_link[4] = ['編輯會議', '/editConference']
     }
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

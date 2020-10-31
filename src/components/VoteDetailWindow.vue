@@ -180,29 +180,29 @@
 import { voteResults } from '../api/proposal'
 
 export default {
-  name: "VoteDetailWindow",
-  data() {
+  name: 'VoteDetailWindow',
+  data () {
     return {
-      voteResult : {},
+      voteResult: {}
       // "caseName": "",
       // "result": "",
       // "vote": {},
       // "percent": {}
     }
   },
-  created(){
+  created () {
     this.getVoteResults(10782)
   },
   methods: {
-    async getVoteResults(caseID) {
-      let response = await voteResults(caseID);
+    async getVoteResults (caseID) {
+      const response = await voteResults(caseID)
       console.log(response.data)
-      this.voteResult = response.data;
+      this.voteResult = response.data
       // this.caseName = response.data.caseName
       // this.result = response.data.result
       // this.vote = response.data.vote
       // this.percent = response.data.percent
-    },
+    }
   }
 }
 </script>

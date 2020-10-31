@@ -13,19 +13,19 @@
 import { createVote } from '../api/proposal'
 
 export default {
-  name: "LeaderVoteWindow",
-  data() {
+  name: 'LeaderVoteWindow',
+  data () {
     return {
     }
   },
   methods: {
-    async createVote() {
-      let response = await createVote();
-      if(response) {
-        console.log("create vote success.");
-        this.$emit('create-success');
+    async createVote () {
+      const response = await createVote()
+      if (response) {
+        console.log('create vote success.')
+        this.$emit('create-success')
       }
-    },
+    }
 
   }
 }

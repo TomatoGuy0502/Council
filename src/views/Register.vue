@@ -45,8 +45,8 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Register',
-  data() {
-    return{
+  data () {
+    return {
       studentID: '',
       password: '',
       department: '工資系',
@@ -62,9 +62,9 @@ export default {
     ])
   },
   methods: {
-    async register() {
-      console.log('註冊');
-    },
+    async register () {
+      console.log('註冊')
+    }
   }
 }
 </script>

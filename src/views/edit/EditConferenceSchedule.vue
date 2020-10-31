@@ -58,45 +58,45 @@
 </template>
 
 <script>
-import {getEditDelibration} from '@/api/delibration'
+import { getEditDelibration } from '@/api/delibration'
 
 export default {
-  name: "ConferenceSchedule",
+  name: 'ConferenceSchedule',
   components: {
     // LoginWindow,
   },
-  data() {
+  data () {
     return {
-      proposalList: [],
-    };
+      proposalList: []
+    }
   },
-  created() {
+  created () {
     this.getEditDelibration(this.$route.params.delibrationID)
   },
   methods: {
-    async getEditDelibration(dID) {
-      let response = await getEditDelibration(dID)
+    async getEditDelibration (dID) {
+      const response = await getEditDelibration(dID)
       this.proposalList = response.data.proposal
     },
-    convertNumber(num) {
-      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
+    convertNumber (num) {
+      return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
     },
-    addNewProposal() {
+    addNewProposal () {
       const lastId = this.proposalList[this.proposalList.length - 1].proposalID
 
       this.proposalList.push({
-        "proposalID": lastId + 1,
-        "dept": "",
-        "reason": "",
-        "description": "",
-        "discussion": "",
+        proposalID: lastId + 1,
+        dept: '',
+        reason: '',
+        description: '',
+        discussion: ''
       })
     },
-    deleteProposal(index) {
+    deleteProposal (index) {
       this.proposalList.splice(index, 1)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

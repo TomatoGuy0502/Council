@@ -24,12 +24,12 @@ import router from '@/router'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-  name: "ConferenceChoose",
+  name: 'ConferenceChoose',
   components: {
   },
-  data() {
+  data () {
     return {
-    };
+    }
   },
   computed: {
     ...mapState([
@@ -40,15 +40,15 @@ export default {
     ...mapMutations([
       'setDelibrationInfo'
     ]),
-    convertNumber(num) {
-      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
+    convertNumber (num) {
+      return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
     },
-    joinDelibration({delibrationID, semester, period, name}) {
-      this.setDelibrationInfo({semester, period, name})
-      router.push({name: 'schedule', params: {delibrationID:delibrationID}})
+    joinDelibration ({ delibrationID, semester, period, name }) {
+      this.setDelibrationInfo({ semester, period, name })
+      router.push({ name: 'schedule', params: { delibrationID: delibrationID } })
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

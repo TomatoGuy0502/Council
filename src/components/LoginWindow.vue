@@ -28,15 +28,15 @@
 </template>
 
 <script>
-import { login } from "../api/user"
+import { login } from '../api/user'
 import router from '@/router'
 
 export default {
   name: 'LoginWindow',
-  data() {
+  data () {
     return {
       studentID: '',
-      password: '',
+      password: ''
     }
   },
   props: {
@@ -45,20 +45,20 @@ export default {
     period: Number,
     name: String,
     startTime: String,
-    position: String,
+    position: String
   },
   methods: {
-    async login(studentID, password) {
-      if(this.studentID!=='' && this.password!=='') {
-        let response = await login(studentID, password);
-        if (response.data.isLogin === "success") {
-          router.push({name: 'schedule', params: {delibrationID:this.delibrationID}})
+    async login (studentID, password) {
+      if (this.studentID !== '' && this.password !== '') {
+        const response = await login(studentID, password)
+        if (response.data.isLogin === 'success') {
+          router.push({ name: 'schedule', params: { delibrationID: this.delibrationID } })
         }
       }
     },
-    convertNumber(num) {
-      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
-    },
+    convertNumber (num) {
+      return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
+    }
   }
 }
 </script>

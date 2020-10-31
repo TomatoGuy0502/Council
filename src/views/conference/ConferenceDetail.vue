@@ -28,9 +28,9 @@
 
     <VoteWindow v-show="showVoteWindow" @vote="vote"/>
 
-    <LeaderVoteWindow 
-      v-if="showLeaderVoteWindow" 
-      @create-success="voteIsOpen=true" 
+    <LeaderVoteWindow
+      v-if="showLeaderVoteWindow"
+      @create-success="voteIsOpen=true"
     />
     <div class="toggle_btns">
       <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
@@ -52,10 +52,10 @@ export default {
   components: {
     VoteWindow,
     LeaderVoteWindow,
-    VoteDetailWindow,
+    VoteDetailWindow
   },
-  data() {
-    return{
+  data () {
+    return {
       proposal: {},
       isLeader: false,
       voteIsOpen: false,
@@ -63,47 +63,47 @@ export default {
       showLeaderVoteWindow: false
     }
   },
-  created() {
-    this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID);
-    this.checkPosition();
+  created () {
+    this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
+    this.checkPosition()
   },
   methods: {
     ...mapMutations([
-      'setErrorWindow',
+      'setErrorWindow'
     ]),
-    async getProposalDetail(dID, pID) {
-      let response = await proposalID(dID, pID);
-      this.proposal = response.data;
+    async getProposalDetail (dID, pID) {
+      const response = await proposalID(dID, pID)
+      this.proposal = response.data
     },
-    async vote(caseID, studentID, result) {
-      let response = await vote(caseID, studentID, result);
-      console.log(response);
+    async vote (caseID, studentID, result) {
+      const response = await vote(caseID, studentID, result)
+      console.log(response)
     },
-    checkPosition() {
-      if(this.$store.state.userInfo.position === 'leader') {
-        this.isLeader = true;
-        this.showLeaderVoteWindow = true;
+    checkPosition () {
+      if (this.$store.state.userInfo.position === 'leader') {
+        this.isLeader = true
+        this.showLeaderVoteWindow = true
       }
     },
-    toggleLeaderWindow() {
-      if(!this.showLeaderVoteWindow && this.showVoteWindow) {
+    toggleLeaderWindow () {
+      if (!this.showLeaderVoteWindow && this.showVoteWindow) {
         this.showVoteWindow = false
       }
-      this.showLeaderVoteWindow = !this.showLeaderVoteWindow;
+      this.showLeaderVoteWindow = !this.showLeaderVoteWindow
     },
-    toggleVoteWindow() {
-      if(this.voteIsOpen) {
+    toggleVoteWindow () {
+      if (this.voteIsOpen) {
         this.showVoteWindow = !this.showVoteWindow
-        if(this.showLeaderVoteWindow) {
+        if (this.showLeaderVoteWindow) {
           this.showLeaderVoteWindow = false
         }
       } else {
-        //發出request，查看議案是否開放投票
+        // 發出request，查看議案是否開放投票
 
-        this.setErrorWindow({showError: true, errorType: 'cantVote'})
+        this.setErrorWindow({ showError: true, errorType: 'cantVote' })
       }
     }
-  },
+  }
 }
 </script>
 

@@ -2,20 +2,20 @@
   <div class="vote_window">
     <h3 class="vote_topic">第一案 決議投票</h3>
     <div class="vote_block">
-      <button 
-        class="vote_button " 
-        :class="[(vote===null || vote===0) ? 'agree_vote' : 'no_vote']" 
-        @click="handleClick(0)" 
+      <button
+        class="vote_button "
+        :class="[(vote===null || vote===0) ? 'agree_vote' : 'no_vote']"
+        @click="handleClick(0)"
         :disabled="vote">同意</button>
-      <button 
-        class="vote_button " 
-        :class="[(vote===null || vote===1) ? 'against_vote' : 'no_vote']" 
-        @click="handleClick(1)" 
+      <button
+        class="vote_button "
+        :class="[(vote===null || vote===1) ? 'against_vote' : 'no_vote']"
+        @click="handleClick(1)"
         :disabled="vote">反對</button>
-      <button 
-        class="vote_button " 
-        :class="[(vote===null || vote===2) ? 'null_vote' : 'no_vote']" 
-        @click="handleClick(2)" 
+      <button
+        class="vote_button "
+        :class="[(vote===null || vote===2) ? 'null_vote' : 'no_vote']"
+        @click="handleClick(2)"
         :disabled="vote">廢票</button>
     </div>
   </div>
@@ -23,17 +23,17 @@
 
 <script>
 export default {
-  name: "VoteWindow",
-  data() {
+  name: 'VoteWindow',
+  data () {
     return {
-      vote: null,
+      vote: null
     }
   },
   methods: {
-    handleClick(index){
-      if(!this.vote) {
-        this.vote = index;
-        this.$emit('vote', index);
+    handleClick (index) {
+      if (!this.vote) {
+        this.vote = index
+        this.$emit('vote', index)
       }
     }
   }

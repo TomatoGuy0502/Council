@@ -3,11 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-//mock api
+// mock api
 import '../mock'
 
 // css
-import './styles/style.scss';
+import './styles/style.scss'
 Vue.config.productionTip = false
 
 new Vue({

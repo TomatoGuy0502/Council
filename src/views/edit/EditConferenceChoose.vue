@@ -1,6 +1,6 @@
 <template>
   <div class="conference_choose">
-    <WarnWindow 
+    <WarnWindow
       :semester="semester"
       :period="period"
       :name="name"
@@ -33,24 +33,24 @@
 </template>
 
 <script>
-import WarnWindow from "@/components/WarnWindow.vue";
-import router from "@/router";
+import WarnWindow from '@/components/WarnWindow.vue'
+import router from '@/router'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-  name: "ConferenceChoose",
+  name: 'ConferenceChoose',
   components: {
     WarnWindow
   },
-  data() {
+  data () {
     return {
       semester: 0,
       period: 0,
-      name: "",
+      name: '',
       deleteIndex: 0,
       showLogin: 0,
       showWarning: 0
-    };
+    }
   },
   computed: {
     ...mapState([
@@ -61,30 +61,30 @@ export default {
     ...mapMutations([
       'setDelibrationInfo'
     ]),
-    deleteDelibration(deleteIndex) {
-      this.showWarning = 0;
-      this.conferenceList.splice(deleteIndex, 1);
+    deleteDelibration (deleteIndex) {
+      this.showWarning = 0
+      this.conferenceList.splice(deleteIndex, 1)
       // deleteDelibration(delibrationID);
     },
-    convertNumber(num) {
-      return ["一","二","三","四","五","六","七","八","九","十"][num-1];
+    convertNumber (num) {
+      return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
     },
-    openWarningWindow({semester, period, name}, deleteIndex) {
-      this.semester = semester;
-      this.period = period;
-      this.name = name;
+    openWarningWindow ({ semester, period, name }, deleteIndex) {
+      this.semester = semester
+      this.period = period
+      this.name = name
       this.deleteIndex = deleteIndex
-      this.showWarning = 1;
+      this.showWarning = 1
     },
-    editSchedule({ delibrationID, semester, period, name }) {
-      this.setDelibrationInfo({semester, period, name})
+    editSchedule ({ delibrationID, semester, period, name }) {
+      this.setDelibrationInfo({ semester, period, name })
       router.push({
-        name: "editSchedule",
+        name: 'editSchedule',
         params: { delibrationID: delibrationID }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

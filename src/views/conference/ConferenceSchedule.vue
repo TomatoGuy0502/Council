@@ -46,33 +46,33 @@
 </template>
 
 <script>
-import { delibrationID } from "@/api/proposal";
+import { delibrationID } from '@/api/proposal'
 
 export default {
-  name: "ConferenceSchedule",
+  name: 'ConferenceSchedule',
   components: {
     // LoginWindow,
   },
-  data() {
+  data () {
     return {
       proposalList: []
-    };
+    }
   },
-  created() {
-    this.getProposal(this.$route.params.delibrationID);
+  created () {
+    this.getProposal(this.$route.params.delibrationID)
   },
   methods: {
-    async getProposal(dID) {
-      let response = await delibrationID(dID);
-      this.proposalList = response.data;
+    async getProposal (dID) {
+      const response = await delibrationID(dID)
+      this.proposalList = response.data
     },
-    convertNumber(num) {
-      return ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"][
+    convertNumber (num) {
+      return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][
         num - 1
-      ];
+      ]
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

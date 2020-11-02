@@ -45,7 +45,7 @@ import VoteWindow from '@/components/VoteWindow.vue'
 import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
 import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
 import { proposalID, vote } from '@/api/proposal'
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'ConferenceDetail',
@@ -60,7 +60,10 @@ export default {
       isLeader: false,
       voteIsOpen: false,
       showVoteWindow: false,
-      showLeaderVoteWindow: false
+      showLeaderVoteWindow: false,
+      ...mapState({
+        position: state => state.user.position
+      })
     }
   },
   created () {
@@ -69,7 +72,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setErrorWindow'
+      'error/setErrorWindow'
     ]),
     async getProposalDetail (dID, pID) {
       const response = await proposalID(dID, pID)
@@ -80,7 +83,7 @@ export default {
       console.log(response)
     },
     checkPosition () {
-      if (this.$store.state.userInfo.position === 'leader') {
+      if (this.position === 'leader') {
         this.isLeader = true
         this.showLeaderVoteWindow = true
       }

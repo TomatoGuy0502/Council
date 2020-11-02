@@ -35,7 +35,7 @@
 <script>
 import WarnWindow from '@/components/WarnWindow.vue'
 import router from '@/router'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'ConferenceChoose',
@@ -53,14 +53,14 @@ export default {
     }
   },
   computed: {
-    ...mapState([
+    ...mapState('delibration', [
       'delibrations'
     ])
   },
   methods: {
-    ...mapMutations([
-      'setDelibrationInfo'
-    ]),
+    ...mapActions({
+      setDelibrationInfo: 'delibration/setDelibrationInfo'
+    }),
     deleteDelibration (deleteIndex) {
       this.showWarning = 0
       this.conferenceList.splice(deleteIndex, 1)

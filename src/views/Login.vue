@@ -39,15 +39,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'setUserInfo',
-      'setErrorWindow'
-    ]),
+    ...mapActions({
+      setUserInfo: 'user/setUserInfo',
+      setErrorWindow: 'error/setErrorWindow'
+    }),
     async login () {
       if (this.studentID !== '' && this.password !== '') {
         const response = await login(this.studentID, this.password)
         if (response.data.isLogin === 'success') {
-          this.setUserInfo(response.data.position)
+          await this.setUserInfo(response.data.position)
           router.push({ name: 'home' })
         } else {
           this.setErrorWindow({ showError: true, errorType: 'login' })

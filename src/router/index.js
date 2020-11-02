@@ -90,7 +90,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!store.state.userInfo.isLogin) {
+  if (!store.state.user.isLogin) {
     switch (to.path) {
       case '/login':
         next()
@@ -104,7 +104,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.path === '/login') {
     next({ path: '/', replace: true })
   } else {
-    if (to.matched.some(record => record.meta.requiresAuth) && store.state.userInfo.position !== 'leader') {
+    if (to.matched.some(record => record.meta.requiresAuth) && store.state.user.position !== 'leader') {
       next({ path: '/' })
     } else {
       next()

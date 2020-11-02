@@ -21,7 +21,7 @@
 
 <script>
 import router from '@/router'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'ConferenceChoose',
@@ -32,14 +32,14 @@ export default {
     }
   },
   computed: {
-    ...mapState([
+    ...mapState('delibration', [
       'delibrations'
     ])
   },
   methods: {
-    ...mapMutations([
-      'setDelibrationInfo'
-    ]),
+    ...mapActions({
+      setDelibrationInfo: 'delibration/setDelibrationInfo'
+    }),
     convertNumber (num) {
       return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
     },

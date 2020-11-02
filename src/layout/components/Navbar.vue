@@ -17,7 +17,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'Navbar',
   computed: {
-    ...mapState([
+    ...mapState('delibration', [
       'delibrationInfo'
     ])
   }

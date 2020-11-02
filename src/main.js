@@ -12,7 +12,7 @@ import './styles/style.scss'
 Vue.config.productionTip = false
 
 Vue.use(new VueSocketIO({
-  debug: true,
+  debug: process.env.NODE_ENV === 'development',
   connection: 'http://localhost:4000',
   vuex: {
     store,

@@ -4,7 +4,7 @@
     <div id="main" class="container">
       <router-view/>
     </div>
-    <ErrorWindow v-if="errorInfo.showError"/>
+    <ErrorWindow v-if="showError"/>
     <Footer/>
   </div>
 </template>
@@ -31,14 +31,14 @@ export default {
     this.setDelibrations()
   },
   computed: {
-    ...mapState([
-      'errorInfo'
-    ])
+    ...mapState({
+      showError: state => state.error.showError
+    })
   },
   methods: {
-    ...mapActions([
-      'setDelibrations'
-    ])
+    ...mapActions({
+      setDelibrations: 'delibration/setDelibrations'
+    })
   }
 }
 </script>

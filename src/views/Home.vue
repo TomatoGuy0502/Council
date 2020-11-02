@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'Home',
   data () {
@@ -29,8 +31,13 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState({
+      position: state => state.user.position
+    })
+  },
   created () {
-    if (this.$store.state.userInfo.position === 'leader') {
+    if (this.position === 'leader') {
       this.home_link[4] = ['編輯會議', '/editConference']
     }
   }

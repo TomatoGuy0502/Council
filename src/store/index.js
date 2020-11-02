@@ -19,33 +19,41 @@ export default new Vuex.Store({
       period: 0,
       name: ''
     },
-    delibrations: []
+    delibrations: [],
+    votingInfo: {
+      isVoting: false
+    }
   },
   mutations: {
-    setUserInfo (state, position) {
-      state.userInfo = {
-        isLogin: true,
-        position
-      }
+    setUserInfo (state, userInfo) {
+      state.userInfo = userInfo
     },
-    setErrorWindow (state, { showError = false, errorType = '' }) {
-      state.errorInfo = {
-        showError, errorType
-      }
+    setErrorWindow (state, errorInfo) {
+      state.errorInfo = errorInfo
     },
     setDelibrations (state, delibrations) {
       state.delibrations = delibrations
     },
-    setDelibrationInfo (state, { semester, period, name }) {
-      state.delibrationInfo = {
-        semester, period, name
-      }
+    setDelibrationInfo (state, delibrationInfo) {
+      state.delibrationInfo = delibrationInfo
     }
   },
   actions: {
     async setDelibrations ({ commit }) {
       const response = await delibration()
       commit('setDelibrations', response.data)
+    },
+    setUserInfo ({ commit }, position) {
+      commit('setUserInfo', {
+        isLogin: true,
+        position
+      })
+    },
+    setErrorWindow ({ commit }, { showError = false, errorType = '' }) {
+      commit('setErrorWindow', { showError, errorType })
+    },
+    setDelibrationInfo ({ commit }, { semester, period, name }) {
+      commit('setDelibrationInfo', { semester, period, name })
     }
   },
   modules: {

@@ -45,7 +45,7 @@ import VoteWindow from '@/components/VoteWindow.vue'
 import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
 import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
 import { proposalID, vote } from '@/api/proposal'
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'ConferenceDetail',
@@ -68,7 +68,7 @@ export default {
     this.checkPosition()
   },
   methods: {
-    ...mapMutations([
+    ...mapActions([
       'setErrorWindow'
     ]),
     async getProposalDetail (dID, pID) {

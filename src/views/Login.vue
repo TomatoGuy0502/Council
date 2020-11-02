@@ -20,7 +20,7 @@
 <script>
 import { login } from '../api/user'
 import router from '@/router'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Login',
@@ -39,9 +39,9 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-      'setErrorWindow',
-      'setUserInfo'
+    ...mapActions([
+      'setUserInfo',
+      'setErrorWindow'
     ]),
     async login () {
       if (this.studentID !== '' && this.password !== '') {

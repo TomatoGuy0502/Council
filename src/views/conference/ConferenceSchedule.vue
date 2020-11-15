@@ -47,6 +47,7 @@
 
 <script>
 import { delibrationID } from '@/api/proposal'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'ConferenceSchedule',
@@ -58,10 +59,15 @@ export default {
       proposalList: []
     }
   },
-  created () {
-    this.getProposal(this.$route.params.delibrationID)
+  created: async function () {
+    this.setLodingStatus(true)
+    await this.getProposal(this.$route.params.delibrationID)
+    this.setLodingStatus(false)
   },
   methods: {
+    ...mapActions([
+      'setLodingStatus'
+    ]),
     async getProposal (dID) {
       const response = await delibrationID(dID)
       this.proposalList = response.data

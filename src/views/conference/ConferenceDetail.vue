@@ -60,20 +60,25 @@ export default {
       isLeader: false,
       voteIsOpen: false,
       showVoteWindow: false,
-      showLeaderVoteWindow: false,
-      ...mapState({
-        position: state => state.user.position
-      })
+      showLeaderVoteWindow: false
     }
   },
-  created () {
-    this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
+  computed: {
+    ...mapState({
+      position: state => state.user.position
+    })
+  },
+  created: async function () {
+    this.setLodingStatus(true)
     this.checkPosition()
+    await this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
+    this.setLodingStatus(false)
   },
   methods: {
-    ...mapActions([
-      'error/setErrorWindow'
-    ]),
+    ...mapActions({
+      setErrorWindow: 'error/setErrorWindow',
+      setLodingStatus: 'setLodingStatus'
+    }),
     async getProposalDetail (dID, pID) {
       const response = await proposalID(dID, pID)
       this.proposal = response.data

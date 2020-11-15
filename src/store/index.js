@@ -11,11 +11,18 @@ export default new Vuex.Store({
   state: {
     votingInfo: {
       isVoting: false
-    }
+    },
+    isLoding: false
   },
   mutations: {
+    setLodingStatus (state, toStatus) {
+      state.isLoding = toStatus
+    }
   },
   actions: {
+    setLodingStatus ({ commit }, toStatus) {
+      commit('setLodingStatus', toStatus)
+    }
   },
   modules: {
     user: moduleUser,

@@ -15,11 +15,17 @@ export default new Vuex.Store({
     isLoding: false
   },
   mutations: {
+    setVotingStatus (state, toStatus) {
+      state.votingInfo.isVoting = toStatus
+    },
     setLodingStatus (state, toStatus) {
       state.isLoding = toStatus
     }
   },
   actions: {
+    setVotingStatus ({ commit }, toStatus) {
+      commit('setVotingStatus', toStatus)
+    },
     setLodingStatus ({ commit }, toStatus) {
       commit('setLodingStatus', toStatus)
     }

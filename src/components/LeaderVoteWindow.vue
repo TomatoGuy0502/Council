@@ -11,6 +11,7 @@
 
 <script>
 import { createVote } from '../api/proposal'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'LeaderVoteWindow',
@@ -18,18 +19,28 @@ export default {
     return {
     }
   },
+  computed: {
+    ...mapState([
+      'votingInfo'
+    ])
+  },
   methods: {
     async createVote () {
-      const response = await createVote()
-      if (response) {
-        console.log('create vote success.')
-        this.$emit('create-success')
-        this.$socket.emit('startResolution', {
-          proposalID: this.$route.params.proposalID
-        })
+      try {
+        const response = await createVote()
+        if (response) {
+          await this.$socket.emit('startResolution', {
+            proposalID: this.$route.params.proposalID
+          })
+          this.setVotingStatus(true)
+        }
+      } catch (err) {
+        console.warn(err)
       }
-    }
-
+    },
+    ...mapActions([
+      'setVotingStatus'
+    ])
   }
 }
 </script>

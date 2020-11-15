@@ -28,10 +28,7 @@
 
     <VoteWindow v-show="showVoteWindow" @vote="vote"/>
 
-    <LeaderVoteWindow
-      v-if="showLeaderVoteWindow"
-      @create-success="voteIsOpen=true"
-    />
+    <LeaderVoteWindow v-if="showLeaderVoteWindow" />
     <div class="toggle_btns">
       <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
       <div class="toggle_btns__vote" :class="{ is_open: showVoteWindow }" @click="toggleVoteWindow">投</div>
@@ -58,14 +55,14 @@ export default {
     return {
       proposal: {},
       isLeader: false,
-      voteIsOpen: false,
       showVoteWindow: false,
       showLeaderVoteWindow: false
     }
   },
   computed: {
     ...mapState({
-      position: state => state.user.position
+      position: state => state.user.position,
+      votingInfo: 'votingInfo'
     })
   },
   created: async function () {
@@ -100,7 +97,7 @@ export default {
       this.showLeaderVoteWindow = !this.showLeaderVoteWindow
     },
     toggleVoteWindow () {
-      if (this.voteIsOpen) {
+      if (this.votingInfo.isVoting) {
         this.showVoteWindow = !this.showVoteWindow
         if (this.showLeaderVoteWindow) {
           this.showLeaderVoteWindow = false

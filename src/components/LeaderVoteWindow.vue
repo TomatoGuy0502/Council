@@ -24,6 +24,9 @@ export default {
       if (response) {
         console.log('create vote success.')
         this.$emit('create-success')
+        this.$socket.emit('startResolution', {
+          proposalID: this.$route.params.proposalID
+        })
       }
     }
 

@@ -20,7 +20,7 @@
 <script>
 import { login } from '../api/user'
 import router from '@/router'
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Login',
@@ -31,9 +31,6 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'errorInfo'
-    ]),
     isValid () {
       return !!(this.studentID && this.password)
     }

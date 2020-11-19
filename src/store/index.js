@@ -28,6 +28,25 @@ export default new Vuex.Store({
     },
     setLodingStatus ({ commit }, toStatus) {
       commit('setLodingStatus', toStatus)
+    },
+    SOCKET_closeVote ({ commit }) {
+      commit('setVotingStatus', false)
+    },
+    SOCKET_startResolutionVote ({ commit }) {
+      console.log('開始決議案投票')
+      commit('setVotingStatus', true)
+    },
+    SOCKET_startAmendmentVote ({ commit }) {
+      console.log('開始修正案投票')
+      // TODO: 處理修正案
+    },
+    SOCKET_closeResolutionVote ({ commit }) {
+      console.log('結束決議案投票')
+      commit('setVotingStatus', false)
+    },
+    SOCKET_closeAmendmentVote ({ commit }) {
+      console.log('結束修正案投票')
+      // TODO: 處理修正案
     }
   },
   modules: {

@@ -47,17 +47,6 @@ export default {
       this.setDelibrationInfo({ semester, period, name })
       router.push({ name: 'schedule', params: { delibrationID: delibrationID } })
     }
-  },
-  sockets: {
-    connect () {
-      console.log('成功連接')
-    },
-    disconnect () {
-      console.log('斷線了')
-    },
-    reconnect () {
-      console.log('重新連線中')
-    }
   }
 }
 </script>

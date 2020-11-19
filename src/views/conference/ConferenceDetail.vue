@@ -26,12 +26,12 @@
       </tr>
     </table>
 
-    <VoteWindow v-show="showVoteWindow" @vote="vote"/>
+    <VoteWindow v-show="votingInfo.isVoting && showVoteWindow" @vote="vote"/>
 
     <LeaderVoteWindow v-if="position === 'leader'" v-show="showLeaderVoteWindow"/>
     <div class="toggle_btns">
       <div v-if="position === 'leader'" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
-      <div class="toggle_btns__vote" :class="{ is_open: showVoteWindow }" @click="toggleVoteWindow">投</div>
+      <div class="toggle_btns__vote" :class="{ is_open: votingInfo.isVoting && showVoteWindow }" @click="toggleVoteWindow">投</div>
     </div>
     <VoteDetailWindow style="display:none"/>
   </div>
@@ -68,11 +68,15 @@ export default {
     this.setLodingStatus(true)
     await this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
     this.setLodingStatus(false)
+    this.$socket.emit('entryVote', {
+      proposalID: this.$route.params.proposalID
+    })
   },
   methods: {
     ...mapActions({
       setErrorWindow: 'error/setErrorWindow',
-      setLodingStatus: 'setLodingStatus'
+      setLodingStatus: 'setLodingStatus',
+      setVotingStatus: 'setVotingStatus'
     }),
     async getProposalDetail (dID, pID) {
       const response = await proposalID(dID, pID)
@@ -95,8 +99,6 @@ export default {
           this.showLeaderVoteWindow = false
         }
       } else {
-        // 發出request，查看議案是否開放投票
-
         this.setErrorWindow({ showError: true, errorType: 'cantVote' })
       }
     }

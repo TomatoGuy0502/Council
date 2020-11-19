@@ -28,9 +28,9 @@
 
     <VoteWindow v-show="showVoteWindow" @vote="vote"/>
 
-    <LeaderVoteWindow v-if="showLeaderVoteWindow" />
+    <LeaderVoteWindow v-if="position === 'leader'" v-show="showLeaderVoteWindow"/>
     <div class="toggle_btns">
-      <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
+      <div v-if="position === 'leader'" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
       <div class="toggle_btns__vote" :class="{ is_open: showVoteWindow }" @click="toggleVoteWindow">投</div>
     </div>
     <VoteDetailWindow style="display:none"/>
@@ -54,7 +54,6 @@ export default {
   data () {
     return {
       proposal: {},
-      isLeader: false,
       showVoteWindow: false,
       showLeaderVoteWindow: false
     }
@@ -67,7 +66,6 @@ export default {
   },
   created: async function () {
     this.setLodingStatus(true)
-    this.checkPosition()
     await this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
     this.setLodingStatus(false)
   },
@@ -83,12 +81,6 @@ export default {
     async vote (caseID, studentID, result) {
       const response = await vote(caseID, studentID, result)
       console.log(response)
-    },
-    checkPosition () {
-      if (this.position === 'leader') {
-        this.isLeader = true
-        this.showLeaderVoteWindow = true
-      }
     },
     toggleLeaderWindow () {
       if (!this.showLeaderVoteWindow && this.showVoteWindow) {

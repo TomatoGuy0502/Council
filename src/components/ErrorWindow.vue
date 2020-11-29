@@ -23,7 +23,8 @@ export default {
       return {
         login: '帳號或密碼錯誤，請重新嘗試',
         notAvailable: '會議簽到未開放/已過期',
-        cantVote: '議案尚未開放投票，請稍後再試'
+        cantVote: '議案尚未開放投票，請稍後再試',
+        cantChangeManipulation: '投票中無法切換，請先結束當前決議/動議'
       }[this.errorType]
     },
     ...mapState({

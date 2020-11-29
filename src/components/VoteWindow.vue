@@ -1,6 +1,6 @@
 <template>
   <div class="vote_window">
-    <h3 class="vote_topic">第一案 決議投票</h3>
+    <h3 class="vote_topic">第一案 {{votingInfo.votingType === 'resolution' ? '決議' : '臨時動議'}}投票</h3>
     <div class="vote_block">
       <button
         class="vote_button "
@@ -22,12 +22,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'VoteWindow',
   data () {
     return {
       vote: null
     }
+  },
+  computed: {
+    ...mapState([
+      'votingInfo'
+    ])
   },
   methods: {
     handleClick (index) {

@@ -1,14 +1,14 @@
 <template>
   <div class="leader_vote_window">
     <h3 class="vote_topic">
-      第一案 {{manipulationType === 'resolution' ? '決議' : '臨時動議'}}操作
+      第一案 {{votingInfo.votingType === 'resolution' ? '決議' : '臨時動議'}}操作
     </h3>
     <div class="vote_block">
       <button class="vote_button start" @click="createVote" v-if="!votingInfo.isVoting">開放<br/>投票</button>
       <button class="vote_button finish" @click="closeVote" v-else>結束<br/>投票</button>
       <button class="vote_button" @click="toggleManipulation">
         切至<br/>
-        {{manipulationType === 'resolution' ? '動議' : '決議'}}
+        {{votingInfo.votingType === 'resolution' ? '動議' : '決議'}}
         </button>
       <button class="vote_button">撤案</button>
     </div>
@@ -17,13 +17,12 @@
 
 <script>
 import { createVote } from '../api/proposal'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'LeaderVoteWindow',
   data () {
     return {
-      manipulationType: 'resolution'
     }
   },
   computed: {
@@ -32,28 +31,49 @@ export default {
     ])
   },
   methods: {
+    ...mapActions({
+      setErrorWindow: 'error/setErrorWindow',
+      setVotingStatus: 'setVotingStatus'
+    }),
     async createVote () {
       try {
         const response = await createVote()
         if (response) {
-          this.$socket.emit('startResolution', {
-            proposalID: this.$route.params.proposalID
-          })
+          if (this.votingInfo.votingType === 'resolution') {
+            this.$socket.emit('startResolution', {
+              proposalID: this.$route.params.proposalID
+            })
+          } else {
+            this.$socket.emit('startAmendment', {
+              proposalID: this.$route.params.proposalID
+            })
+          }
         }
       } catch (err) {
         console.warn(err)
       }
     },
     closeVote () {
-      this.$socket.emit('closeResolution', {
-        proposalID: this.$route.params.proposalID
-      })
+      if (this.votingInfo.votingType === 'resolution') {
+        this.$socket.emit('closeResolution', {
+          proposalID: this.$route.params.proposalID
+        })
+      } else {
+        this.$socket.emit('closeAmendment', {
+          proposalID: this.$route.params.proposalID
+        })
+      }
     },
     toggleManipulation () {
-      if (this.manipulationType === 'resolution') {
-        this.manipulationType = 'amendment'
+      if (this.votingInfo.isVoting) {
+        console.warn('不行')
+        this.setErrorWindow({ showError: true, errorType: 'cantChangeManipulation' })
+        return
+      }
+      if (this.votingInfo.votingType === 'resolution') {
+        this.setVotingStatus({ votingType: 'amendment' })
       } else {
-        this.manipulationType = 'resolution'
+        this.setVotingStatus({ votingType: 'resolution' })
       }
     }
   }

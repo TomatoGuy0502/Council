@@ -1,6 +1,6 @@
 <template>
   <div class="Register">
-    <form class="register_form" @submit.prevent="">
+    <form class="register_form" @submit.prevent="register()">
       <div class="register_form__item">
         <label for="account">帳 號</label>
         <input class="input" id="account" v-model.trim="studentID" type="text" placeholder="學號(H00000000)" required>
@@ -42,6 +42,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { signUp } from '../api/user'
 
 export default {
   name: 'Register',
@@ -63,7 +64,17 @@ export default {
   },
   methods: {
     async register () {
+      // TODO: 跳轉頁面
       console.log('註冊')
+      await signUp({
+        studentID: this.studentID,
+        password: this.password,
+        department: this.department,
+        grade: this.grade,
+        name: this.name,
+        email: this.email,
+        position: this.position
+      })
     }
   }
 }

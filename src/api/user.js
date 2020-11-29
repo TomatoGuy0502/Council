@@ -12,7 +12,7 @@ import Request from '../services/http-request'
 
 export const signUp = ({ studentID, department, grade, email, name, password, position }) => {
   return Request({
-    url: 'user/signUp',
+    url: 'user/signup',
     data: {
       studentID: studentID,
       department: department,
@@ -32,6 +32,7 @@ export const signUp = ({ studentID, department, grade, email, name, password, po
 */
 
 export const login = (studentID, password) => {
+  // TODO: 處理403情況
   return Request({
     url: 'user/login',
     data: {

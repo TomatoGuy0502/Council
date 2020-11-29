@@ -43,8 +43,12 @@ export default {
     async login () {
       if (this.studentID !== '' && this.password !== '') {
         const response = await login(this.studentID, this.password)
-        if (response.data.isLogin === 'success') {
-          await this.setUserInfo(response.data.position)
+        console.log(response)
+        // TODO: 處理帳密錯誤
+        if (response.data.studentID) {
+          if (response.data.isLeader) {
+            await this.setUserInfo('leader')
+          }
           router.push({ name: 'home' })
         } else {
           this.setErrorWindow({ showError: true, errorType: 'login' })

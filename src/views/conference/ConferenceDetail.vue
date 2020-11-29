@@ -75,8 +75,7 @@ export default {
   methods: {
     ...mapActions({
       setErrorWindow: 'error/setErrorWindow',
-      setLodingStatus: 'setLodingStatus',
-      setVotingStatus: 'setVotingStatus'
+      setLodingStatus: 'setLodingStatus'
     }),
     async getProposalDetail (dID, pID) {
       const response = await proposalID(dID, pID)

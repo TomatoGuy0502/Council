@@ -1,10 +1,15 @@
 <template>
   <div class="leader_vote_window">
-    <h3 class="vote_topic">第一案 決議操作</h3>
+    <h3 class="vote_topic">
+      第一案 {{manipulationType === 'resolution' ? '決議' : '臨時動議'}}操作
+    </h3>
     <div class="vote_block">
       <button class="vote_button start" @click="createVote" v-if="!votingInfo.isVoting">開放<br/>投票</button>
       <button class="vote_button finish" @click="closeVote" v-else>結束<br/>投票</button>
-      <button class="vote_button">修正<br/>動議</button>
+      <button class="vote_button" @click="toggleManipulation">
+        切至<br/>
+        {{manipulationType === 'resolution' ? '動議' : '決議'}}
+        </button>
       <button class="vote_button">撤案</button>
     </div>
   </div>
@@ -18,6 +23,7 @@ export default {
   name: 'LeaderVoteWindow',
   data () {
     return {
+      manipulationType: 'resolution'
     }
   },
   computed: {
@@ -42,6 +48,13 @@ export default {
       this.$socket.emit('closeResolution', {
         proposalID: this.$route.params.proposalID
       })
+    },
+    toggleManipulation () {
+      if (this.manipulationType === 'resolution') {
+        this.manipulationType = 'amendment'
+      } else {
+        this.manipulationType = 'resolution'
+      }
     }
   }
 }

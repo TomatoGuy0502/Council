@@ -10,13 +10,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     votingInfo: {
-      isVoting: false
+      isVoting: false,
+      votingType: 'resolution'
     },
     isLoding: false
   },
   mutations: {
     setVotingStatus (state, toStatus) {
-      state.votingInfo.isVoting = toStatus
+      state.votingInfo = {
+        ...state.votingInfo,
+        ...toStatus
+      }
     },
     setLodingStatus (state, toStatus) {
       state.isLoding = toStatus
@@ -34,19 +38,31 @@ export default new Vuex.Store({
     },
     SOCKET_startResolutionVote ({ commit }) {
       console.log('開始決議案投票')
-      commit('setVotingStatus', true)
+      commit('setVotingStatus', {
+        isVoting: true,
+        votingType: 'resolution'
+      })
     },
     SOCKET_startAmendmentVote ({ commit }) {
       console.log('開始修正案投票')
-      // TODO: 處理修正案
+      commit('setVotingStatus', {
+        isVoting: true,
+        votingType: 'amendment'
+      })
     },
     SOCKET_closeResolutionVote ({ commit }) {
       console.log('結束決議案投票')
-      commit('setVotingStatus', false)
+      commit('setVotingStatus', {
+        isVoting: false,
+        votingType: 'resolution'
+      })
     },
     SOCKET_closeAmendmentVote ({ commit }) {
       console.log('結束修正案投票')
-      // TODO: 處理修正案
+      commit('setVotingStatus', {
+        isVoting: false,
+        votingType: 'amendment'
+      })
     }
   },
   modules: {

@@ -76,11 +76,11 @@ export default {
       this.deleteIndex = deleteIndex
       this.showWarning = 1
     },
-    editSchedule ({ delibrationID, semester, period, name }) {
-      this.setDelibrationInfo({ semester, period, name })
+    editSchedule ({ id, semester, period, dName }) {
+      this.setDelibrationInfo({ semester, period, name: dName })
       router.push({
         name: 'editSchedule',
-        params: { delibrationID: delibrationID }
+        params: { delibrationID: id }
       })
     }
   }

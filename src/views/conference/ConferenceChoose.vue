@@ -50,9 +50,9 @@ export default {
     convertTimeString (timeString) {
       return new Date(timeString).toLocaleString()
     },
-    joinDelibration ({ delibrationID, semester, period, name }) {
-      this.setDelibrationInfo({ semester, period, name })
-      router.push({ name: 'schedule', params: { delibrationID: delibrationID } })
+    joinDelibration ({ id, semester, period, dName }) {
+      this.setDelibrationInfo({ semester, period, name: dName })
+      router.push({ name: 'schedule', params: { delibrationID: id } })
     }
   }
 }

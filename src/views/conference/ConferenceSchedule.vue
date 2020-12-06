@@ -22,13 +22,13 @@
             <router-link
               :to="{
                 name: 'detail',
-                params: { proposalID: proposal.proposalID }
+                params: { proposalID: proposal.id }
               }"
               tag="div"
               class="case__number"
               >第{{ convertNumber(index + 1) }}案
             </router-link>
-            <div class="case__proposer">{{ proposal.sponsor }}</div>
+            <div class="case__proposer">{{ proposal.dept }}</div>
           </div>
         </div>
       </div>

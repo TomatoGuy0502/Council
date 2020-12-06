@@ -33,15 +33,16 @@ export const createDelibration = (dName, startTime, position, semester, period) 
 
 export const getEditDelibration = (delibrationID) => {
   return Request({
-    url: '/delibration/editDelibration/' + delibrationID,
+    url: '/delibration/editProposals/' + delibrationID,
     method: 'get'
   })
 }
 
 export const saveEditDelibration = (delibrationID, proposal) => {
   return Request({
-    url: '/delibration/saveEditDelibration/' + delibrationID,
+    url: '/delibration/saveEditProposal/',
     data: {
+      delibrationID,
       proposal
     },
     method: 'post'

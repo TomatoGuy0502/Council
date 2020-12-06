@@ -1,7 +1,7 @@
 <template>
   <div class="conference_schedule">
     <div class="topic">議程</div>
-    <div class="edit_finish">完成送出</div>
+    <div class="edit_finish" @click="saveEditDelibration">完成送出</div>
     <div class="schedule_list">
       <div class="schedule_block">
         <h4 class="schedule_block__title">一、正式開會</h4>
@@ -25,6 +25,12 @@
                 <td>提案單位</td>
                 <td>
                   <input type="text" placeholder="請填入單位" v-model="proposal.dept">
+                </td>
+              </tr>
+              <tr>
+                <td>提案人</td>
+                <td>
+                  <input type="text" placeholder="請填入姓名" v-model="proposal.name">
                 </td>
               </tr>
               <tr>
@@ -76,16 +82,16 @@ export default {
   methods: {
     async getEditDelibration (dID) {
       const response = await getEditDelibration(dID)
-      this.proposalList = response.data.proposal
+      this.proposalList = response.data
     },
     convertNumber (num) {
       return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
     },
     addNewProposal () {
-      const lastId = this.proposalList[this.proposalList.length - 1].proposalID
+      // const lastId = this.proposalList[this.proposalList.length - 1].proposalID
 
       this.proposalList.push({
-        proposalID: lastId + 1,
+        proposalID: -1,
         dept: '',
         reason: '',
         description: '',
@@ -94,6 +100,9 @@ export default {
     },
     deleteProposal (index) {
       this.proposalList.splice(index, 1)
+    },
+    saveEditDelibration () {
+      console.log('ok')
     }
   }
 }
@@ -190,21 +199,14 @@ export default {
       }
       &__form {
         width: 100%;
-        td {
-          width: 50%;
-          font-size: $text;
-          * {
-            width: 100%;
-            color: #fff;
-            font-size: $text;
-          }
-        }
         input, textarea {
-          height: 40px;
           border: none;
           background-color: #a9d18e;
           border-radius: 7px;
-          padding: 0 10px;
+          padding: 10px 10px;
+          width: 100%;
+          color: #fff;
+          font-size: $text;
           &::placeholder{
             font-size: 22px;
             line-height: 78px;

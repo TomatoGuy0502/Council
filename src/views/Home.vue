@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Home',
@@ -31,6 +31,11 @@ export default {
       ]
     }
   },
+  methods: {
+    ...mapActions({
+      setDelibrations: 'delibration/setDelibrations'
+    })
+  },
   computed: {
     ...mapState({
       position: state => state.user.position
@@ -40,6 +45,7 @@ export default {
     if (this.position === 'leader') {
       this.home_link[4] = ['編輯會議', '/editConference']
     }
+    this.setDelibrations()
   }
 }
 </script>

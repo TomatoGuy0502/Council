@@ -31,9 +31,6 @@ export default {
     return {
     }
   },
-  created () {
-    this.setDelibrations()
-  },
   computed: {
     ...mapState('delibration', [
       'delibrations'
@@ -41,8 +38,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      setDelibrationInfo: 'delibration/setDelibrationInfo',
-      setDelibrations: 'delibration/setDelibrations'
+      setDelibrationInfo: 'delibration/setDelibrationInfo'
     }),
     convertNumber (num) {
       return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]

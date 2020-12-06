@@ -28,7 +28,7 @@ import Navbar from '@/layout/components/Navbar.vue'
 import Footer from '@/layout/components/Footer.vue'
 import ErrorWindow from '@/components/ErrorWindow.vue'
 // import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
@@ -41,18 +41,10 @@ export default {
     return {
     }
   },
-  created () {
-    this.setDelibrations()
-  },
   computed: {
     ...mapState({
       showError: state => state.error.showError,
       isLoding: 'isLoding'
-    })
-  },
-  methods: {
-    ...mapActions({
-      setDelibrations: 'delibration/setDelibrations'
     })
   }
 }

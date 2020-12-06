@@ -10,8 +10,8 @@
       >
         <div class="item_block">
           <h3 class="item_block__session">{{item.semester}}學年度第{{convertNumber(item.period)}}會期</h3>
-          <h2 class="item_block__name">{{item.name}}</h2>
-          <div class="item_block__time">{{item.startTime}} 開放登入</div>
+          <h2 class="item_block__name">{{item.dName}}</h2>
+          <div class="item_block__time">{{convertTimeString(item.startTime)}} 開放登入</div>
         </div>
         <p class="item_authority">權限：{{item.position}}</p>
       </div>
@@ -31,6 +31,9 @@ export default {
     return {
     }
   },
+  created () {
+    this.setDelibrations()
+  },
   computed: {
     ...mapState('delibration', [
       'delibrations'
@@ -38,10 +41,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      setDelibrationInfo: 'delibration/setDelibrationInfo'
+      setDelibrationInfo: 'delibration/setDelibrationInfo',
+      setDelibrations: 'delibration/setDelibrations'
     }),
     convertNumber (num) {
       return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
+    },
+    convertTimeString (timeString) {
+      return new Date(timeString).toLocaleString()
     },
     joinDelibration ({ delibrationID, semester, period, name }) {
       this.setDelibrationInfo({ semester, period, name })

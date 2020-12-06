@@ -21,6 +21,7 @@ const errorHandler = (status, message) => {
 
 const api = axios.create({
   baseURL: '/api',
+  withCredentials: true,
   timeout: 7000,
   headers: {
     'Content-Type': 'application/json'
@@ -34,6 +35,7 @@ api.interceptors.request.use(async (config) => {
 })
 
 api.interceptors.response.use(async (response) => {
+  console.log(response)
   return response
 }, (error) => {
   if (error) {

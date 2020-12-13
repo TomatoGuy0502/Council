@@ -1,11 +1,11 @@
 const users = [
   {
     studentID: 'H00000000',
-    position: 'leader'
+    isLeader: true
   },
   {
     studentID: 'H00000001',
-    position: 'normal'
+    isLeader: false
   }
 ]
 
@@ -21,8 +21,8 @@ export default [
       for (const user of users) {
         if (user.studentID === studentID) {
           return {
-            isLogin: 'success',
-            position: user.position
+            studentID,
+            isLeader: user.isLeader
           }
         }
       }

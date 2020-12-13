@@ -104,7 +104,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.path === '/login') {
     next({ path: '/', replace: true })
   } else {
-    if (to.matched.some(record => record.meta.requiresAuth) && store.state.user.position !== 'leader') {
+    if (to.matched.some(record => record.meta.requiresAuth) && !store.state.user.isLeader) {
       next({ path: '/' })
     } else {
       next()

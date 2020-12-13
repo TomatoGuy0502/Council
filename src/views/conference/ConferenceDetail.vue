@@ -28,9 +28,9 @@
 
     <VoteWindow v-show="votingInfo.isVoting && showVoteWindow" @vote="vote"/>
 
-    <LeaderVoteWindow v-if="position === 'leader'" v-show="showLeaderVoteWindow"/>
+    <LeaderVoteWindow v-if="isLeader" v-show="showLeaderVoteWindow"/>
     <div class="toggle_btns">
-      <div v-if="position === 'leader'" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
+      <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
       <div class="toggle_btns__vote" :class="{ is_open: votingInfo.isVoting && showVoteWindow }" @click="toggleVoteWindow">投</div>
     </div>
     <!-- <VoteDetailWindow style="display:none"/> -->
@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     ...mapState({
-      position: state => state.user.position,
+      isLeader: state => state.user.isLeader,
       votingInfo: 'votingInfo'
     })
   },

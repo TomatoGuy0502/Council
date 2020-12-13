@@ -38,11 +38,11 @@ export default {
   },
   computed: {
     ...mapState({
-      position: state => state.user.position
+      isLeader: state => state.user.isLeader
     })
   },
   created () {
-    if (this.position === 'leader') {
+    if (this.isLeader) {
       this.home_link[4] = ['編輯會議', '/editConference']
     }
     this.setDelibrations()

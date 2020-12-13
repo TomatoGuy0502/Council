@@ -1,19 +1,19 @@
 <template>
   <div class="Login">
-    <div class="login_form" @submit.prevent="login">
+    <form class="login_form" @submit.prevent="login">
       <div class="login_form__account">
         <label for="account">帳 號</label>
-        <input class="input" id="account" v-model.trim="studentID" type="text" placeholder="學號(H00000000)" @keyup.13="login(studentID, password)" required>
+        <input class="input" id="account" v-model.trim="studentID" type="text" placeholder="學號(H00000000)" required>
       </div>
       <div class="login_form__password">
         <label for="password">密 碼</label>
-        <input class="input" id="password" v-model.trim="password" type="password" placeholder="密碼(隨便打)" @keyup.13="login(studentID, password)" required>
+        <input class="input" id="password" v-model.trim="password" type="password" placeholder="密碼(隨便打)" required>
       </div>
       <div class="login_btn_container">
-        <button class="login_form__btn" :class="{isValid}" type="submit" @click="login(studentID, password)">登 入</button>
-        <button class="login_form__btn" @click="toRegister">註 冊</button>
+        <button class="login_form__btn" :class="{isValid}" type="submit">登 入</button>
+        <router-link tag="button" :to="{ name: 'register' }" class="login_form__btn">註 冊</router-link>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -37,26 +37,24 @@ export default {
   },
   methods: {
     ...mapActions({
-      setUserInfo: 'user/setUserInfo',
+      userLogin: 'user/login',
       setErrorWindow: 'error/setErrorWindow'
     }),
     async login () {
-      if (this.studentID !== '' && this.password !== '') {
+      if (this.isValid) {
         const response = await login(this.studentID, this.password)
-        console.log(response)
         // TODO: 處理帳密錯誤
         if (response.data.studentID) {
-          if (response.data.isLeader) {
-            await this.setUserInfo('leader')
-          }
+          await this.userLogin({
+            isLeader: response.data.isLeader,
+            studentID: response.data.studentID
+          })
+          console.log('route: ', this.$route)
           router.push({ name: 'home' })
         } else {
           this.setErrorWindow({ showError: true, errorType: 'login' })
         }
       }
-    },
-    toRegister () {
-      router.push({ name: 'register' })
     }
   }
 }

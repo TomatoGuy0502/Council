@@ -2,20 +2,30 @@ export const moduleUser = {
   namespaced: true,
   state: () => ({
     isLogin: false,
-    position: ''
+    isLeader: false,
+    studentID: ''
   }),
   mutations: {
-    setUserInfo (state, { isLogin, position }) {
-      state.isLogin = isLogin
-      state.position = position
+    login (state, { isLeader, studentID }) {
+      state.isLogin = true
+      state.isLeader = isLeader
+      state.studentID = studentID
+    },
+    logout (state) {
+      state.isLogin = false
+      state.isLeader = false
+      state.studentID = false
     }
   },
   actions: {
-    setUserInfo ({ commit }, position) {
-      commit('setUserInfo', {
-        isLogin: true,
-        position
+    login ({ commit }, { isLeader, studentID }) {
+      commit('login', {
+        isLeader,
+        studentID
       })
+    },
+    logout ({ commit }) {
+      commit('logout')
     }
   }
 }

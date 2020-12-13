@@ -6,24 +6,24 @@ const delibration = [
   {
     delibrationID: 'AX100',
     proposals: [{
-      proposalID: 'A320000',
-      sponsor: '學生會長'
+      id: 'A320000',
+      dept: '學生會長'
     }, {
-      proposalID: 'A320001',
-      sponsor: '文學院代'
+      id: 'A320001',
+      dept: '文學院代'
     }]
   },
   {
     delibrationID: 'AX101',
     proposals: [{
-      proposalID: 'A320000',
-      sponsor: '工學院代'
+      id: 'A320000',
+      dept: '工學院代'
     }, {
-      proposalID: 'A320001',
-      sponsor: '理學院代'
+      id: 'A320001',
+      dept: '理學院代'
     }, {
-      proposalID: 'A320002',
-      sponsor: '學生會長'
+      id: 'A320002',
+      dept: '學生會長'
     }]
   }
 ]
@@ -62,7 +62,7 @@ export default [
   // 取得某特定議案內容 /proposal/:delibrationID/:proposalID
   // Request for AX100/A320000, Return proposal
   {
-    url: '/proposal/' + delibration[0].delibrationID + '/' + delibration[0].proposals[0].proposalID,
+    url: '/proposal/' + delibration[0].delibrationID + '/' + delibration[0].proposals[0].id,
     method: 'get',
     response: () => {
       return proposal

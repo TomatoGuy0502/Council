@@ -12,8 +12,8 @@ export default [
       const delibrations = []
       for (let i = 0; i < 5; i++) {
         const delibration = {
-          delibrationID: 'AX' + (i + 100).toString(),
-          name: '第' + Random.cword('零一二三四五六七八九十') + '次財委會',
+          id: 'AX' + (i + 100).toString(),
+          dName: '第' + Random.cword('零一二三四五六七八九十') + '次財委會',
           createTime:
             '109-' + Random.date('MM-dd') + ' ' + Random.time('HH:mm:ss'),
           startTime:

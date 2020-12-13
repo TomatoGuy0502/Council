@@ -4,7 +4,7 @@
     <div class="conference_list">
       <div
         v-for="item in delibrations"
-        :key="item.delibrationID"
+        :key="item.id"
         class="conference_item"
         @click="joinDelibration(item)"
       >

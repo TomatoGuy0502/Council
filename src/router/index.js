@@ -66,6 +66,15 @@ const routes = [
     }
   },
   {
+    path: '/createConference',
+    name: 'createConference',
+    component: () => import(/* webpackChunkName: "CreateConference" */ '../views/edit/CreateConference.vue'),
+    meta: {
+      title: '新增會議',
+      requiresAuth: true
+    }
+  },
+  {
     path: '/vote',
     name: 'vote',
     component: () => import(/* webpackChunkName: "VoteDetailWindow" */ '../components/VoteDetailWindow.vue')

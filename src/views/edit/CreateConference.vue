@@ -1,76 +1,75 @@
 <template>
   <form class="create_conference" @submit.prevent="handleSubmit">
-    <div class="create_conference__item">
-      <label for="dept">提案單位</label>
-      <input class="input" id="dept" v-model.trim="dept" type="text" placeholder="學生會" required>
+    <label for="name">議會名稱</label>
+    <input class="create_conference__input" id="name" v-model.trim="name" type="text" placeholder="第一次財委會" required>
+
+    <label for="startTime">開始時間</label>
+    <input class="create_conference__input" id="startTime" v-model.trim="startTime" type="datetime-local" required>
+
+    <label for="endTime">結束時間</label>
+    <input class="create_conference__input" id="endTime" v-model.trim="endTime" type="datetime-local" required>
+
+    <label for="position">權限</label>
+    <input class="create_conference__input" id="position" v-model.trim="position" type="text" placeholder="請填入權限" required>
+
+    <label for="semester">學年度</label>
+    <input class="create_conference__input" id="semester" v-model.trim="semester" type="number" required>
+
+    <label for="period">會期</label>
+    <input class="create_conference__input" id="period" v-model.trim="period" type="number" required>
+
+    <div style="grid-column: 1 / span 2;">
+      <button class="create_conference__btn" type="submit">送 出</button>
     </div>
-    <div class="create_conference__item">
-      <label for="name">提案人</label>
-      <input class="input" id="name" v-model.trim="name" type="text" placeholder="會長" required>
-    </div>
-    <div class="create_conference__item">
-      <label for="reason">案由</label>
-      <textarea class="input" id="reason" v-model.trim="reason" placeholder="請填入案由" required></textarea>
-    </div>
-    <div class="create_conference__item">
-      <label for="description">描述</label>
-      <textarea class="input" id="description" v-model.trim="description" placeholder="請填入描述" required></textarea>
-    </div>
-    <button class="create_conference__btn" type="submit">送 出</button>
   </form>
 </template>
+
 <script>
+import { createDelibration } from '@/api/delibration'
+
 export default {
   data () {
     return {
-      dept: '',
       name: '',
-      reason: '',
-      description: ''
+      startTime: null,
+      endTime: null,
+      position: '',
+      semester: null,
+      period: null
     }
   },
   methods: {
     handleSubmit () {
+      createDelibration()
       console.log(this.dept, this.name, this.reason)
     }
   }
 }
 </script>
+
 <style lang="scss">
 .create_conference{
   flex-grow: 1;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto auto;
+  place-items: center;
+  row-gap: 20px;
+  column-gap: 15px;
+  align-content: center;
   justify-content: center;
-  align-items: center;
-  label{
-    color:$title1;
-  }
-  .input{
+  &__input{
     font-size: $text;
     border: 1.5px #767171 solid;
     border-radius: 7px;
-    margin-left: 15px;
     padding: 10px 5px;
     background-color: #ffffff00;
   }
-  select {
-    width: 189px;
-  }
-  &__item {
-    margin-bottom: 20px;
-  }
   &__btn{
+    @include btn;
     background-color: $primary;
-    border-radius: 7px;
-    border: none;
-    color: #fff;
     font-size: $text_s;
-    font-weight: bold;
     padding: 5px 30px;
-    margin: 0;
-    cursor: pointer;
   }
 }
 </style>

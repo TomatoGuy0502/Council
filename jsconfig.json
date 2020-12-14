@@ -2,5 +2,13 @@
   "include": [
     "src/**/*.vue",
     "src/**/*.js"
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
+  }
 }

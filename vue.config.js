@@ -2,7 +2,10 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: { // 在每個撰寫scss的地方引入變數
-        prependData: '@import "src/styles/_variables.scss";'
+        prependData: `
+          @import "src/styles/_variables.scss";
+          @import "src/styles/_mixin.scss";
+        `
       }
     }
   },

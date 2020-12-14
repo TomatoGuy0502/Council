@@ -86,9 +86,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  label{
-    color:$title1;
-  }
   .input{
     text-align: center;
     font-size: $text;
@@ -105,15 +102,10 @@ export default {
     margin-bottom: 20px;
   }
   &__btn{
+    @include btn;
     background-color: $primary;
-    border-radius: 7px;
-    border: none;
-    color: #fff;
     font-size: $text_s;
-    font-weight: bold;
     padding: 5px 30px;
-    margin: 0;
-    cursor: pointer;
   }
 }
 </style>

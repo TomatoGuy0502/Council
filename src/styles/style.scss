@@ -40,6 +40,10 @@ li{
   list-style-type: none;
 }
 
+label{
+  color: $title1;
+}
+
 .window{
   position: fixed;
   z-index: 400;

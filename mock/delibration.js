@@ -34,35 +34,25 @@ export default [
     }
   },
   {
-    url: '/delibration/editDelibration/' + 'AX100',
+    url: '/delibration/editProposals/' + 'AX100',
     type: 'get',
     response: () => {
-      return {
-        delibrationID: 10782,
-        name: '第一次財委會',
-        createTime: '109-01-07 22:00:00',
-        startTime: '109-02-02 12:00:00',
-        endTime: '109-02-02 13:00:00',
-        position: '第四十三期學生代表大會 財委',
-        semester: 108,
-        period: 1,
-        proposal: [
-          {
-            proposalID: 1,
-            dept: '學生會1',
-            reason: 'for fun',
-            description: 'just fun',
-            discussion: 'nothing'
-          },
-          {
-            proposalID: 2,
-            dept: '學生會2',
-            reason: 'for fun',
-            description: 'just fun',
-            discussion: 'nothing'
-          }
-        ]
-      }
+      return [
+        {
+          proposalID: 1,
+          dept: '學生會1',
+          reason: 'for fun',
+          description: 'just fun',
+          name: '黃XX'
+        },
+        {
+          proposalID: 2,
+          dept: '學生會2',
+          reason: 'for fun',
+          description: 'just fun',
+          name: '陳OO'
+        }
+      ]
     }
   }
 ]

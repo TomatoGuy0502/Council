@@ -52,7 +52,7 @@ export default {
   flex-grow: 1;
   width: 100%;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 1fr;
   place-items: center;
   row-gap: 20px;
   column-gap: 15px;
@@ -64,6 +64,7 @@ export default {
     border-radius: 7px;
     padding: 10px 5px;
     background-color: #ffffff00;
+    width: 100%;
   }
   &__btn{
     @include btn;

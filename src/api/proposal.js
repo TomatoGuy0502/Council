@@ -26,23 +26,36 @@ export const createVote = () => {
   })
 }
 
-export const vote = (caseID, studentID, result) => {
+export const vote = (proposalID, studentID, result, isAmendment) => {
   return Request({
     url: 'proposal/vote',
     data: {
-      caseID: caseID,
+      proposalID: proposalID,
       studentID: studentID,
-      result: result
+      result: result,
+      isAmendment: isAmendment
     },
     method: 'post'
   })
 }
 
-export const voteResults = (caseID) => {
+export const isVoted = (proposalID, isAmendment) => {
+  return Request({
+    url: 'proposal/isVoted',
+    data: {
+      proposalID: proposalID,
+      isAmendment: isAmendment
+    },
+    method: 'post'
+  })
+}
+
+export const voteResults = (proposalID, isAmendment) => {
   return Request({
     url: 'proposal/voteResults',
     data: {
-      caseID: caseID
+      proposalID: proposalID,
+      isAmendment: isAmendment
     },
     method: 'post'
   })

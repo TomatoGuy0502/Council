@@ -1,7 +1,7 @@
 <template>
   <div class="conference_schedule">
     <div class="topic">議程</div>
-    <div class="edit_finish" @click="saveEditDelibration">完成送出</div>
+    <div class="edit_finish" @click="saveEditProposals">完成送出</div>
     <div class="schedule_list">
       <div class="schedule_block">
         <h4 class="schedule_block__title">一、正式開會</h4>
@@ -65,6 +65,7 @@
 
 <script>
 import { getEditDelibration } from '@/api/delibration'
+import { saveEditProposals } from '@/api/proposal'
 
 export default {
   name: 'ConferenceSchedule',
@@ -91,7 +92,7 @@ export default {
       // const lastId = this.proposalList[this.proposalList.length - 1].proposalID
 
       this.proposalList.push({
-        proposalID: -1,
+        id: -1,
         dept: '',
         reason: '',
         description: '',
@@ -101,8 +102,13 @@ export default {
     deleteProposal (index) {
       this.proposalList.splice(index, 1)
     },
-    saveEditDelibration () {
-      console.log('ok')
+    async saveEditProposals () {
+      try {
+        await saveEditProposals(this.$route.params.delibrationID, this.proposalList)
+        console.log('ok')
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 }

@@ -24,8 +24,8 @@ export default {
         ['公共提案', ''],
         ['選舉系統', ''],
         ['近期議案', ''],
+        ['新增會議', '/createConference'],
         ['會議記錄', ''],
-        ['法規查詢', ''],
         // ["編輯會議","/editConference"],
         ['加入會議', '/conference']
       ]

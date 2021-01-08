@@ -17,12 +17,13 @@ export const entry = (delibrationID) => {
   })
 }
 
-export const createDelibration = (dName, startTime, position, semester, period) => {
+export const createDelibration = ({ dName, startTime, endTime, position, semester, period }) => {
   return Request({
     url: 'delibration/createDelibration',
     data: {
       dName: dName,
       startTime: startTime,
+      endTime: endTime,
       position: position,
       semester: semester,
       period: period
@@ -40,7 +41,7 @@ export const getEditDelibration = (delibrationID) => {
 
 export const saveEditDelibration = (delibrationID, proposal) => {
   return Request({
-    url: '/delibration/saveEditProposal/',
+    url: '/delibration/saveEditDelibration',
     data: {
       delibrationID,
       proposal

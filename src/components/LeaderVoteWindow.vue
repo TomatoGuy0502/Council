@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { createVote } from '../api/proposal'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -37,17 +36,14 @@ export default {
     }),
     async createVote () {
       try {
-        const response = await createVote()
-        if (response) {
-          if (this.votingInfo.votingType === 'resolution') {
-            this.$socket.emit('startResolution', {
-              proposalID: this.$route.params.proposalID
-            })
-          } else {
-            this.$socket.emit('startAmendment', {
-              proposalID: this.$route.params.proposalID
-            })
-          }
+        if (this.votingInfo.votingType === 'resolution') {
+          this.$socket.emit('startResolution', {
+            proposalID: this.$route.params.proposalID
+          })
+        } else {
+          this.$socket.emit('startAmendment', {
+            proposalID: this.$route.params.proposalID
+          })
         }
       } catch (err) {
         console.warn(err)

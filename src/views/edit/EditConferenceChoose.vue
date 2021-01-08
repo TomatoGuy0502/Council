@@ -7,7 +7,7 @@
       :deleteIndex="deleteIndex"
       v-if="showWarning"
       @close-window="showWarning = 0"
-      @delete-delibration="deleteDelibration"
+      @delete-delibration="handleDeleteDelibration"
     />
     <p>請 選 擇 會 議</p>
     <div class="conference_list">
@@ -23,7 +23,7 @@
           <div class="item_block__time">{{item.startTime}} 開放登入</div>
           <div class="item_block__edit">
             <div @click.stop="">編輯</div>
-            <div @click.stop="openWarningWindow(item, index)">刪除</div>
+            <div @click.stop="openWarningWindow(item, index, item.id)">刪除</div>
           </div>
         </div>
         <p class="item_authority">權限：{{item.position}}</p>
@@ -36,6 +36,7 @@
 import WarnWindow from '@/components/WarnWindow.vue'
 import router from '@/router'
 import { mapState, mapActions } from 'vuex'
+import { deleteDelibration } from '@/api/delibration'
 
 export default {
   name: 'ConferenceChoose',
@@ -49,7 +50,8 @@ export default {
       name: '',
       deleteIndex: 0,
       showLogin: 0,
-      showWarning: 0
+      showWarning: 0,
+      deleteID: null
     }
   },
   computed: {
@@ -61,20 +63,21 @@ export default {
     ...mapActions({
       setDelibrationInfo: 'delibration/setDelibrationInfo'
     }),
-    deleteDelibration (deleteIndex) {
+    handleDeleteDelibration () {
       this.showWarning = 0
-      this.conferenceList.splice(deleteIndex, 1)
-      // deleteDelibration(delibrationID);
+      // this.conferenceList.splice(deleteIndex, 1)
+      deleteDelibration(this.deleteID)
     },
     convertNumber (num) {
       return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
     },
-    openWarningWindow ({ semester, period, name }, deleteIndex) {
+    openWarningWindow ({ semester, period, name }, deleteIndex, deleteID) {
       this.semester = semester
       this.period = period
       this.name = name
       this.deleteIndex = deleteIndex
       this.showWarning = 1
+      this.deleteID = deleteID
     },
     editSchedule ({ id, semester, period, dName }) {
       this.setDelibrationInfo({ semester, period, name: dName })

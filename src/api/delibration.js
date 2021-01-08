@@ -39,6 +39,16 @@ export const getEditDelibration = (delibrationID) => {
   })
 }
 
+export const deleteDelibration = (delibrationID) => {
+  return Request({
+    url: '/delibration/deleteDelibration',
+    data: {
+      delibrationID: delibrationID
+    },
+    method: 'delete'
+  })
+}
+
 export const saveEditDelibration = (delibrationID, proposal) => {
   return Request({
     url: '/delibration/saveEditDelibration',

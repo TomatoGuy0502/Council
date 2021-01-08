@@ -4,18 +4,18 @@
     <div class="vote_block">
       <button
         class="vote_button "
-        :class="[(vote===null || vote===0) ? 'agree_vote' : 'no_vote']"
-        @click="handleClick(0)"
+        :class="[(vote===null || vote===1) ? 'agree_vote' : 'no_vote']"
+        @click="handleClick(1)"
         :disabled="vote">同意</button>
       <button
         class="vote_button "
-        :class="[(vote===null || vote===1) ? 'against_vote' : 'no_vote']"
-        @click="handleClick(1)"
+        :class="[(vote===null || vote===2) ? 'against_vote' : 'no_vote']"
+        @click="handleClick(2)"
         :disabled="vote">反對</button>
       <button
         class="vote_button "
-        :class="[(vote===null || vote===2) ? 'null_vote' : 'no_vote']"
-        @click="handleClick(2)"
+        :class="[(vote===null || vote===3) ? 'null_vote' : 'no_vote']"
+        @click="handleClick(3)"
         :disabled="vote">廢票</button>
     </div>
   </div>
@@ -23,6 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { isVoted } from '../api/proposal'
 
 export default {
   name: 'VoteWindow',
@@ -35,6 +36,12 @@ export default {
     ...mapState([
       'votingInfo'
     ])
+  },
+  async created () {
+    const res = await isVoted(this.$route.params.proposalID, 0)
+    if (res.data.result) {
+      this.vote = res.data.result
+    }
   },
   methods: {
     handleClick (index) {

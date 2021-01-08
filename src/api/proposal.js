@@ -71,3 +71,14 @@ export const createProposal = (delibrationID, dept, reason, description, discuss
     method: 'post'
   })
 }
+
+export const saveEditProposals = (delibrationID, proposal) => {
+  return Request({
+    url: 'proposal/saveEditProposals',
+    data: {
+      delibrationID,
+      proposal
+    },
+    method: 'put'
+  })
+}

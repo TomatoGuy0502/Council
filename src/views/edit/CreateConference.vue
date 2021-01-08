@@ -4,10 +4,10 @@
     <input class="create_conference__input" id="name" v-model.trim="name" type="text" placeholder="第一次財委會" required>
 
     <label for="startTime">開始時間</label>
-    <input class="create_conference__input" id="startTime" v-model.trim="startTime" type="datetime-local" required>
+    <input class="create_conference__input" id="startTime" v-model.trim="startTime" type="datetime-local" :min="timeNow" required>
 
     <label for="endTime">結束時間</label>
-    <input class="create_conference__input" id="endTime" v-model.trim="endTime" type="datetime-local" required>
+    <input class="create_conference__input" id="endTime" v-model.trim="endTime" type="datetime-local" :min="startTime" required>
 
     <label for="position">權限</label>
     <input class="create_conference__input" id="position" v-model.trim="position" type="text" placeholder="請填入權限" required>
@@ -35,13 +35,36 @@ export default {
       endTime: null,
       position: '',
       semester: null,
-      period: null
+      period: null,
+      timeNow: new Date(+new Date() + 8 * 3600 * 1000).toISOString().slice(0, 16)
+      // new Date(+new Date() + 8 * 3600 * 1000).toISOString().slice(0, 16).replace(/T/, ' ')
     }
   },
   methods: {
-    handleSubmit () {
-      createDelibration()
-      console.log(this.dept, this.name, this.reason)
+    async handleSubmit () {
+      try {
+        const res = await createDelibration({
+          dName: this.name,
+          startTime: this.startTime.replace(/T/, ' '),
+          endTime: this.endTime.replace(/T/, ' '),
+          position: this.position,
+          semester: this.semester,
+          period: this.period
+        })
+        console.log(res)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  },
+  created () {
+    this.startTime = this.timeNow
+  },
+  watch: {
+    startTime () {
+      const time = new Date(this.startTime)
+      time.setHours(time.getHours() + 10)
+      this.endTime = time.toISOString().slice(0, 16)
     }
   }
 }
@@ -64,6 +87,7 @@ export default {
     border-radius: 7px;
     padding: 10px 5px;
     background-color: #ffffff00;
+    width: 100%;
   }
   &__btn{
     @include btn;

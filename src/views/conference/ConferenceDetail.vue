@@ -26,21 +26,21 @@
       </tr>
     </table>
 
-    <VoteWindow v-show="votingInfo.isVoting && showVoteWindow" @vote="vote"/>
+    <VoteWindow v-show="votingInfo.isVoting && showVoteWindow" @vote="vote" />
 
     <LeaderVoteWindow v-if="isLeader" v-show="showLeaderVoteWindow"/>
     <div class="toggle_btns">
       <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
       <div class="toggle_btns__vote" :class="{ is_open: votingInfo.isVoting && showVoteWindow }" @click="toggleVoteWindow">投</div>
     </div>
-    <!-- <VoteDetailWindow style="display:none"/> -->
+    <VoteDetailWindow style="display:none"/>
   </div>
 </template>
 
 <script>
 import VoteWindow from '@/components/VoteWindow.vue'
 import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
-// import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
+import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
 import { proposalID, vote } from '@/api/proposal'
 import { mapState, mapActions } from 'vuex'
 
@@ -48,8 +48,8 @@ export default {
   name: 'ConferenceDetail',
   components: {
     VoteWindow,
-    LeaderVoteWindow
-    // VoteDetailWindow
+    LeaderVoteWindow,
+    VoteDetailWindow
   },
   data () {
     return {
@@ -68,9 +68,9 @@ export default {
     this.setLodingStatus(true)
     await this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
     this.setLodingStatus(false)
-    // this.$socket.emit('entryVote', {
-    //   proposalID: this.$route.params.proposalID
-    // })
+    this.$socket.emit('entryVote', {
+      proposalID: this.$route.params.proposalID
+    })
   },
   methods: {
     ...mapActions({
@@ -81,8 +81,9 @@ export default {
       const response = await proposalID(dID, pID)
       this.proposal = response.data
     },
-    async vote (caseID, studentID, result) {
-      const response = await vote(caseID, studentID, result)
+    async vote (result) {
+      // TODO: isAmendment要修改
+      const response = await vote(this.proposal.id, 'H34066000', result, 0)
       console.log(response)
     },
     toggleLeaderWindow () {

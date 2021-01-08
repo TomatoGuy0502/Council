@@ -184,24 +184,17 @@ export default {
   data () {
     return {
       voteResult: {}
-      // "caseName": "",
-      // "result": "",
-      // "vote": {},
-      // "percent": {}
     }
   },
   created () {
-    this.getVoteResults(10782)
+    this.getVoteResults(4)
   },
   methods: {
-    async getVoteResults (caseID) {
-      const response = await voteResults(caseID)
+    async getVoteResults () {
+      // TODO: 修正isAmendment
+      const response = await voteResults(this.$route.params.proposalID, 0)
       console.log(response.data)
       this.voteResult = response.data
-      // this.caseName = response.data.caseName
-      // this.result = response.data.result
-      // this.vote = response.data.vote
-      // this.percent = response.data.percent
     }
   }
 }

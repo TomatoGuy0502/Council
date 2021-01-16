@@ -65,7 +65,6 @@ export default {
   methods: {
     async register () {
       // TODO: 跳轉頁面
-      console.log('註冊')
       await signUp({
         studentID: this.studentID,
         password: this.password,

@@ -62,7 +62,6 @@ export default {
     },
     toggleManipulation () {
       if (this.votingInfo.isVoting) {
-        console.warn('不行')
         this.setErrorWindow({ showError: true, errorType: 'cantChangeManipulation' })
         return
       }

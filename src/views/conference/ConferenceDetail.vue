@@ -41,7 +41,7 @@
 import VoteWindow from '@/components/VoteWindow.vue'
 import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
 import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
-import { proposalID, vote } from '@/api/proposal'
+import { getProposalData, vote } from '@/api/proposal'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -78,7 +78,7 @@ export default {
       setLodingStatus: 'setLodingStatus'
     }),
     async getProposalDetail (dID, pID) {
-      const response = await proposalID(dID, pID)
+      const response = await getProposalData(dID, pID)
       this.proposal = response.data
     },
     async vote (result) {

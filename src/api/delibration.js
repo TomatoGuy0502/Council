@@ -1,18 +1,15 @@
 import Request from '../services/http-request'
 
-export const delibration = () => {
+export const getAvailableDelibrations = () => {
   return Request({
     url: 'delibration',
     method: 'get'
   })
 }
 
-export const entry = (delibrationID) => {
+export const getAllDelibrations = () => {
   return Request({
-    url: 'delibration/entry',
-    data: {
-      delibrationID: delibrationID
-    },
+    url: 'delibration/leader',
     method: 'get'
   })
 }
@@ -49,12 +46,17 @@ export const deleteDelibration = (delibrationID) => {
   })
 }
 
-export const saveEditDelibration = (delibrationID, proposal) => {
+export const saveEditDelibration = (delibrationID, { endTime, name, period, position, semester, startTime }) => {
   return Request({
     url: '/delibration/saveEditDelibration',
     data: {
       delibrationID,
-      proposal
+      endTime,
+      name,
+      period,
+      position,
+      semester,
+      startTime
     },
     method: 'post'
   })

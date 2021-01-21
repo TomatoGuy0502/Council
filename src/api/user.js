@@ -9,7 +9,6 @@ import Request from '../services/http-request'
     @param {} password
     @param {} position
 */
-
 export const signUp = ({ studentID, department, grade, email, name, password, position }) => {
   return Request({
     url: 'user/signup',
@@ -38,26 +37,6 @@ export const login = (studentID, password) => {
     data: {
       studentID: studentID,
       password: password
-    },
-    method: 'post'
-  })
-}
-
-export const changeRole = (studentID) => {
-  return Request({
-    url: 'user/changeRole',
-    data: {
-      studentID: studentID
-    },
-    method: 'post'
-  })
-}
-
-export const deleteRole = (studentID) => {
-  return Request({
-    url: 'user/deleteRole',
-    data: {
-      studentID: studentID
     },
     method: 'post'
   })

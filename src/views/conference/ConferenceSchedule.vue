@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { delibrationID } from '@/api/proposal'
+import { getProposals } from '@/api/proposal'
 import { mapActions } from 'vuex'
 
 export default {
@@ -69,7 +69,7 @@ export default {
       'setLodingStatus'
     ]),
     async getProposal (dID) {
-      const response = await delibrationID(dID)
+      const response = await getProposals(dID)
       this.proposalList = response.data
     },
     convertNumber (num) {

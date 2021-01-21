@@ -5,14 +5,14 @@ import Request from '../services/http-request'
     @param {string} sponsor
 */
 
-export const delibrationID = (delibrationID) => {
+export const getProposals = (delibrationID) => {
   return Request({
     url: 'proposal/' + delibrationID,
     method: 'get'
   })
 }
 
-export const proposalID = (delibrationID, proposalID) => {
+export const getProposalData = (delibrationID, proposalID) => {
   return Request({
     url: 'proposal/' + delibrationID + '/' + proposalID,
     method: 'get'
@@ -56,30 +56,6 @@ export const voteResults = (proposalID, isAmendment) => {
     data: {
       proposalID: proposalID,
       isAmendment: isAmendment
-    },
-    method: 'post'
-  })
-}
-
-export const resultLists = (caseID) => {
-  return Request({
-    url: 'proposal/resultLists',
-    data: {
-      caseID: caseID
-    },
-    method: 'post'
-  })
-}
-
-export const createProposal = (delibrationID, dept, reason, description, discussion) => {
-  return Request({
-    url: 'proposal/createProposal',
-    data: {
-      delibrationID: delibrationID,
-      dept: dept,
-      reason: reason,
-      description: description,
-      discussion: discussion
     },
     method: 'post'
   })

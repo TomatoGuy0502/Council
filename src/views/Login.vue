@@ -42,16 +42,17 @@ export default {
     }),
     async login () {
       if (this.isValid) {
-        const response = await login(this.studentID, this.password)
-        // TODO: 處理帳密錯誤
-        if (response.data.studentID) {
-          await this.userLogin({
-            isLeader: response.data.isLeader,
-            studentID: response.data.studentID
-          })
-          console.log('route: ', this.$route)
-          router.push({ name: 'home' })
-        } else {
+        try {
+          const response = await login(this.studentID, this.password)
+          if (response.data.studentID) {
+            await this.userLogin({
+              isLeader: response.data.isLeader,
+              studentID: response.data.studentID
+            })
+            console.log('route: ', this.$route)
+            router.push({ name: 'home' })
+          }
+        } catch (err) {
           this.setErrorWindow({ showError: true, errorType: 'login' })
         }
       }

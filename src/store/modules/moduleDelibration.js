@@ -1,4 +1,4 @@
-import { delibration } from '@/api/delibration'
+import { getAvailableDelibrations, getAllDelibrations } from '@/api/delibration'
 
 export const moduleDelibration = {
   namespaced: true,
@@ -19,8 +19,13 @@ export const moduleDelibration = {
     }
   },
   actions: {
-    async setDelibrations ({ commit }) {
-      const response = await delibration()
+    async setDelibrations ({ commit }, { isLeader = false }) {
+      let response
+      if (isLeader) {
+        response = await getAllDelibrations()
+      } else {
+        response = await getAvailableDelibrations()
+      }
       commit('setDelibrations', response.data)
     },
     setDelibrationInfo ({ commit }, { semester, period, name }) {

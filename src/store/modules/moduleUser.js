@@ -1,3 +1,5 @@
+import router from '@/router'
+
 export const moduleUser = {
   namespaced: true,
   state: () => ({
@@ -14,7 +16,8 @@ export const moduleUser = {
     logout (state) {
       state.isLogin = false
       state.isLeader = false
-      state.studentID = false
+      state.studentID = ''
+      router.push({ name: 'login' })
     }
   },
   actions: {

@@ -8,18 +8,27 @@
       <p class="session">{{delibrationInfo.semester}}學年度第{{delibrationInfo.period}}會期</p>
       <h2 class="name">{{delibrationInfo.name}}</h2>
     </div>
+    <div class="navbar__logout" @click="userLogout" v-if="!isLoginPage">登出</div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Navbar',
   computed: {
     ...mapState('delibration', [
       'delibrationInfo'
-    ])
+    ]),
+    isLoginPage () {
+      return this.$route.path === '/login'
+    }
+  },
+  methods: {
+    ...mapActions({
+      userLogout: 'user/logout'
+    })
   }
 }
 </script>
@@ -56,6 +65,9 @@ export default {
     .name{
       height: 38px;
     }
+  }
+  &__logout {
+    margin-left: auto;
   }
 }
 

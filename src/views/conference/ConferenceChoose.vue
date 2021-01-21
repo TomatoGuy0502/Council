@@ -54,7 +54,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .conference_choose {
   width: 100%;
   // flex-grow: 1;

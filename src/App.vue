@@ -56,6 +56,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $primary;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .loding-mask {
@@ -142,8 +145,6 @@ export default {
 }
 
 #main {
-  margin-top: 84px;
-  margin-bottom: 48px;
   min-height: calc(100vh - 132px);
   display: flex;
   flex-direction: column;

@@ -93,6 +93,7 @@ export default {
 <style lang="scss">
 .conference_choose {
   width: 100%;
+  overflow: auto;
   & > p {
     color: #000;
     font-size: $text_s;

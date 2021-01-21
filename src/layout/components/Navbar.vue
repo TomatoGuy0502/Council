@@ -35,8 +35,6 @@ export default {
 
 <style scoped lang="scss">
 .navbar{
-  position: fixed;
-  top: 0;
   z-index: 1;
   width: 100%;
   background-color: $secondary;

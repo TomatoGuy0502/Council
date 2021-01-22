@@ -20,7 +20,7 @@
         <div class="item_block">
           <h3 class="item_block__session">{{item.semester}}學年度第{{convertNumber(item.period)}}學期</h3>
           <h2 class="item_block__name">{{item.dName}}</h2>
-          <div class="item_block__time">{{item.startTime}} 開放登入</div>
+          <div class="item_block__time">{{convertTimeString(item.startTime)}} 開放登入</div>
           <div class="item_block__edit">
             <div @click.stop="">編輯</div>
             <div @click.stop="openWarningWindow(item, index, item.id)">刪除</div>
@@ -61,12 +61,22 @@ export default {
   },
   methods: {
     ...mapActions({
-      setDelibrationInfo: 'delibration/setDelibrationInfo'
+      setDelibrationInfo: 'delibration/setDelibrationInfo',
+      setDelibrations: 'delibration/setDelibrations'
     }),
-    handleDeleteDelibration () {
+    async handleDeleteDelibration () {
       this.showWarning = 0
-      // this.conferenceList.splice(deleteIndex, 1)
-      deleteDelibration(this.deleteID)
+      try {
+        const res = await deleteDelibration(this.deleteID)
+        if (res.data.message === 'success') {
+          await this.setDelibrations({ isLeader: true })
+          console.log('刪除成功')
+        } else {
+          console.log('刪除失敗')
+        }
+      } catch (err) {
+        console.log(err)
+      }
     },
     convertNumber (num) {
       return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
@@ -85,6 +95,9 @@ export default {
         name: 'editSchedule',
         params: { delibrationID: id }
       })
+    },
+    convertTimeString (timeString) {
+      return new Date(timeString).toLocaleString()
     }
   }
 }

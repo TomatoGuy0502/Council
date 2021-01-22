@@ -1,7 +1,9 @@
 <template>
   <div class="conference_schedule">
-    <div class="topic">議程</div>
-    <div class="edit_finish" @click="saveEditProposals">完成送出</div>
+    <div class="header">
+      <div class="topic">議程</div>
+      <div class="edit_finish" @click="saveEditProposals">完成送出</div>
+    </div>
     <div class="schedule_list">
       <div class="schedule_block">
         <h4 class="schedule_block__title">一、正式開會</h4>
@@ -117,28 +119,33 @@ export default {
 <style lang="scss" scoped>
 .conference_schedule {
   width: 100%;
+  overflow: auto;
+}
+
+.header {
+  width: calc(100% + 20px);
+  position: absolute;
+  left: -20px;
+  display: flex;
+  background-color: #fff;
+  padding: 10px 0;
 }
 
 .topic {
-  position: absolute;
-  left: -20px;
   border-radius: 7px;
   background-color: $primary;
   color: #fff;
   font-size: $text_l;
   font-weight: 700;
   padding: 0 20px 0 60px;
-  margin-top: 20px;
+  margin-right: 20px;
 }
 
 .edit_finish {
-  position: absolute;
-  left: 160px;
   height: 53px;
   line-height: 53px;
   width: 160px;
   border-radius: 7px;
-  margin-top: 20px;
   background-color: #00b050;
   color: #fff;
   font-weight: 700;

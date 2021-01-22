@@ -24,9 +24,8 @@ export default {
         ['公共提案', ''],
         ['選舉系統', ''],
         ['近期議案', ''],
-        ['新增會議', '/createConference'],
-        ['會議記錄', ''],
-        // ["編輯會議","/editConference"],
+        ['新增會議', ''],
+        ['編輯會議', ''],
         ['加入會議', '/conference']
       ]
     }
@@ -44,8 +43,11 @@ export default {
   created () {
     if (this.isLeader) {
       this.home_link[4] = ['編輯會議', '/editConference']
+      this.home_link[3] = ['新增會議', '/createConference']
+      this.setDelibrations({ isLeader: true })
+    } else {
+      this.setDelibrations({ isLeader: false })
     }
-    this.setDelibrations()
   }
 }
 </script>

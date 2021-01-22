@@ -19,7 +19,7 @@ export const moduleDelibration = {
     }
   },
   actions: {
-    async setDelibrations ({ commit }, { isLeader = false }) {
+    async setDelibrations ({ commit }, { isLeader = false } = {}) {
       let response
       if (isLeader) {
         response = await getAllDelibrations()

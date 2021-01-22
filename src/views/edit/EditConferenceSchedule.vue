@@ -3,6 +3,7 @@
     <div class="header">
       <div class="topic">議程</div>
       <div class="edit_finish" @click="saveEditProposals">完成送出</div>
+      <p class="error" v-if="updateError">{{updateError}}</p>
     </div>
     <div class="schedule_list">
       <div class="schedule_block">
@@ -76,7 +77,8 @@ export default {
   },
   data () {
     return {
-      proposalList: []
+      proposalList: [],
+      updateError: null
     }
   },
   created () {
@@ -91,8 +93,6 @@ export default {
       return ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][num - 1]
     },
     addNewProposal () {
-      // const lastId = this.proposalList[this.proposalList.length - 1].proposalID
-
       this.proposalList.push({
         id: -1,
         dept: '',
@@ -106,10 +106,14 @@ export default {
     },
     async saveEditProposals () {
       try {
-        await saveEditProposals(this.$route.params.delibrationID, this.proposalList)
-        console.log('ok')
+        const res = await saveEditProposals(this.$route.params.delibrationID, this.proposalList)
+        if (res.data.message === 'success') {
+          this.$router.push({ name: 'editConference' })
+        } else {
+          this.updateError = res.data
+        }
       } catch (err) {
-        console.error(err)
+        this.updateError = err.message
       }
     }
   }
@@ -150,6 +154,7 @@ export default {
   color: #fff;
   font-weight: 700;
   font-size: $text_s;
+  margin-right: 20px;
 }
 
 .schedule_list {
@@ -254,12 +259,7 @@ export default {
     font-size: $text_s;
   }
 }
-// @media (min-width: 390px) {
-//   .schedule_block__detail {
-//     margin-left: calc((100vw - 390px) / 2);
-//   }
-// }
-// .schedule_title{
-
-// }
+.error {
+  color: red;
+}
 </style>

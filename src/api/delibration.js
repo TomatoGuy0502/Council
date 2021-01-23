@@ -46,13 +46,13 @@ export const deleteDelibration = (delibrationID) => {
   })
 }
 
-export const saveEditDelibration = (delibrationID, { endTime, name, period, position, semester, startTime }) => {
+export const saveEditDelibration = (delibrationID, { endTime, dName, period, position, semester, startTime }) => {
   return Request({
     url: '/delibration/saveEditDelibration',
     data: {
       delibrationID,
       endTime,
-      name,
+      dName,
       period,
       position,
       semester,

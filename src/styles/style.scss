@@ -57,6 +57,13 @@ label{
   align-items: center;
 }
 
+.btn {
+  @include btn;
+  background-color: $primary;
+  font-size: $text_s;
+  padding: 5px 30px;
+}
+
 ::placeholder{
   color: $notes;
 }

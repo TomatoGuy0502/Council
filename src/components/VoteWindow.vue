@@ -84,7 +84,7 @@ export default {
   border-radius: 10px;
   color: #fff;
   font-size: $text_lm;
-  line-height: $text_lm;
+  line-height: 60px;
   font-weight: 700;
   border: none;
   cursor: pointer;

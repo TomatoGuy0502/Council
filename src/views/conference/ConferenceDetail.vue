@@ -31,22 +31,23 @@
 
       <LeaderVoteWindow v-if="isLeader" v-show="showLeaderVoteWindow"/>
       <div class="toggle_btns">
-        <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
-        <div class="toggle_btns__vote" :class="{ is_open: votingInfo.isVoting && showVoteWindow }" @click="toggleVoteWindow">投</div>
+        <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">操作</div>
+        <div class="toggle_btns__vote" :class="{ is_open: votingInfo.isVoting && showVoteWindow }" @click="toggleVoteWindow">投票</div>
+        <div class="toggle_btns__vote" :class="{ is_open: showResultWindow }" @click="toggleResultWindow">結果</div>
       </div>
     </div>
     <div v-else>
       <p>查無此會議</p>
       <router-link :to="{name: 'home'}" class="btn" tag="span">回到首頁</router-link>
     </div>
-    <!-- <VoteDetailWindow style="display:none"/> -->
+    <VoteDetailWindow v-if="showResultWindow"/>
   </div>
 </template>
 
 <script>
 import VoteWindow from '@/components/VoteWindow.vue'
 import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
-// import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
+import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
 import { getProposalData, vote } from '@/api/proposal'
 import { mapState, mapActions } from 'vuex'
 
@@ -54,14 +55,15 @@ export default {
   name: 'ConferenceDetail',
   components: {
     VoteWindow,
-    LeaderVoteWindow
-    // VoteDetailWindow
+    LeaderVoteWindow,
+    VoteDetailWindow
   },
   data () {
     return {
       proposal: {},
       showVoteWindow: false,
-      showLeaderVoteWindow: false
+      showLeaderVoteWindow: false,
+      showResultWindow: false
     }
   },
   computed: {
@@ -77,9 +79,9 @@ export default {
     this.setLodingStatus(true)
     await this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
     this.setLodingStatus(false)
-    // this.$socket.emit('entryVote', {
-    //   proposalID: this.$route.params.proposalID
-    // })
+    this.$socket.emit('entryVote', {
+      proposalID: this.$route.params.proposalID
+    })
   },
   methods: {
     ...mapActions({
@@ -110,6 +112,9 @@ export default {
       } else {
         this.setErrorWindow({ showError: true, errorType: 'cantVote' })
       }
+    },
+    toggleResultWindow () {
+      this.showResultWindow = !this.showResultWindow
     }
   }
 }
@@ -156,7 +161,7 @@ export default {
     cursor: pointer;
     // color: #fff;
     font-weight: 700;
-    width: 30px;
+    padding: 0 5px;
     height: 30px;
     border-radius: 7px;
     border: 3px solid #3b3838;

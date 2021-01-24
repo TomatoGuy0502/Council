@@ -1,6 +1,6 @@
 <template>
   <div class="vote_detail_window">
-    <h3 class="vote_topic">第一案 決議投票</h3>
+    <!-- <h3 class="vote_topic">第一案 決議投票</h3> -->
     <div class="vote_block">
       <div class="vote_button agree_vote">同意</div>
       <div class="vote_button against_vote">反對</div>
@@ -8,171 +8,26 @@
     </div>
     <div class="vote_result">
       <div class="vote_result__item">
-        <h5>22票</h5>
-        <p>88%</p>
+        <h5>{{voteResult.agree}}票</h5>
+        <p>{{percent.agree}}%</p>
       </div>
       <div class="vote_result__item">
-        <h5>2票</h5>
-        <p>8%</p>
+        <h5>{{voteResult.disagree}}票</h5>
+        <p>{{percent.disagree}}%</p>
       </div>
       <div class="vote_result__item">
-        <h5>1票</h5>
-        <p>4%</p>
+        <h5>{{voteResult.spoil}}票</h5>
+        <p>{{percent.spoil}}%</p>
       </div>
     </div>
-    <div class="voter">
+    <!-- <div class="voter">
       <div class="voter__item">
         <div class="voter_number">1</div>
         <div class="voter_department">不分系代</div>
         <div class="voter_name">暫無</div>
       </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-      <div class="voter__item">
-        <div class="voter_number">1</div>
-        <div class="voter_department">不分系代</div>
-        <div class="voter_name">暫無</div>
-      </div>
-    </div>
-    <div class="confirm">確定</div>
+    </div> -->
+    <!-- <div class="confirm">確定</div> -->
   </div>
 </template>
 
@@ -196,6 +51,16 @@ export default {
       console.log(response.data)
       this.voteResult = response.data
     }
+  },
+  computed: {
+    percent () {
+      const total = this.voteResult.agree + this.voteResult.disagree + this.voteResult.spoil
+      return {
+        agree: (this.voteResult.agree / total * 100).toFixed(1),
+        disagree: (this.voteResult.disagree / total * 100).toFixed(1),
+        spoil: (this.voteResult.spoil / total * 100).toFixed(1)
+      }
+    }
   }
 }
 </script>
@@ -204,12 +69,11 @@ export default {
 .vote_detail_window{
   position: fixed;
   max-width: 480px;
-  top: 0;
+  bottom: 48px;
   padding: 20px 5px 10px 5px;
   left: 0;
   right: 0;
   margin: 0 auto;
-  height: 100vh;
   background-color: #fff;
   border: 5px solid $primary;
   border-radius: 18px;
@@ -259,13 +123,11 @@ export default {
   }
 }
 .confirm{
+  @include btn;
+  color: inherit;
   margin: 0 auto;
   border: 2px solid $title1;
   width: 100px;
-  height: 60px;
-  border-radius: 7px;
   font-size: $text_ms;
-  font-weight: 700;
-  cursor: pointer;
 }
 </style>

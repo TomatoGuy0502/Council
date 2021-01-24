@@ -22,7 +22,7 @@
           <h2 class="item_block__name">{{item.dName}}</h2>
           <div class="item_block__time">{{convertTimeString(item.startTime)}} 開放登入</div>
           <div class="item_block__edit">
-            <div @click.stop="">編輯</div>
+            <div @click.stop="editConferenceInfo(item)">編輯</div>
             <div @click.stop="openWarningWindow(item, index, item.id)">刪除</div>
           </div>
         </div>
@@ -98,6 +98,10 @@ export default {
     },
     convertTimeString (timeString) {
       return new Date(timeString).toLocaleString()
+    },
+    editConferenceInfo ({ id, semester, period, dName }) {
+      this.setDelibrationInfo({ semester, period, name: dName })
+      this.$router.push({ name: 'edit', params: { delibrationID: id } })
     }
   }
 }

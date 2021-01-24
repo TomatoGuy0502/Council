@@ -108,6 +108,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  // 取消loading動畫
+  store.dispatch('setLodingStatus', false)
   if (!store.state.user.isLogin) {
     switch (to.path) {
       case '/login':

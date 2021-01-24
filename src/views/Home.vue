@@ -44,10 +44,8 @@ export default {
     if (this.isLeader) {
       this.home_link[4] = ['編輯會議', '/editConference']
       this.home_link[3] = ['新增會議', '/createConference']
-      this.setDelibrations({ isLeader: true })
-    } else {
-      this.setDelibrations({ isLeader: false })
     }
+    this.setDelibrations({ isLeader: this.isLeader })
   }
 }
 </script>

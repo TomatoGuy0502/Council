@@ -3,24 +3,24 @@ import axios from 'axios'
 const errorHandler = (status, message) => {
   switch (status) {
     case 400:
-      console.log(message)
+      console.log(status, message)
       break
     case 401:
-      console.log(message)
+      console.log(status, message)
       break
     case 403:
-      console.log(message)
+      console.log(status, message)
       break
     case 404:
-      console.log(message)
+      console.log(status, message)
       break
     default:
-      console.log(message)
+      console.log(status, message)
   }
 }
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:3000/api',
   withCredentials: true,
   timeout: 7000,
   headers: {

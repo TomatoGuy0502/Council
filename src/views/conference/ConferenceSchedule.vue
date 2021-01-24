@@ -108,6 +108,7 @@ export default {
   font-weight: 700;
   padding: 0 20px 0 60px;
   margin-top: 20px;
+  top: 0;
 }
 
 .schedule_list {
@@ -174,12 +175,5 @@ export default {
       }
     }
   }
-}
-
-.btn {
-  @include btn;
-  background-color: $primary;
-  font-size: $text_s;
-  padding: 5px 30px;
 }
 </style>

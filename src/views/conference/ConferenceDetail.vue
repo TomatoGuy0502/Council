@@ -1,46 +1,52 @@
 <template>
   <div class="conference_detail">
-    <div class="schedule_block">
-      <h3 class="schedule_block__title">四、議案與討論事項</h3>
-    </div>
-    <table class="detail_table">
-      <tr class="case_info">
-        <td class="title" width="25px">案次</td>
-        <td class="title_data">第一案</td>
-        <td class="title" width="50px">提案單位</td>
-        <td class="title_data">{{proposal.dept}} {{proposal.name}}</td>
-      </tr>
-      <tr class="case_summary">
-        <td class="title">案由</td>
-        <td colspan="3" align="left">{{proposal.reason}}</td>
-      </tr>
-      <tr class="case_description">
-        <td class="title">說明</td>
-        <td colspan="3" align="left">
-          <a v-for="(description,index) in proposal.description" :key="index" :href="description" target="_blank">{{description}}</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="title">討論</td>
-        <td colspan="3" align="left">{{proposal.discussion}}</td>
-      </tr>
-    </table>
+    <div v-if="!isProposalEmpty">
+      <div class="schedule_block">
+        <h3 class="schedule_block__title">四、議案與討論事項</h3>
+      </div>
+      <table class="detail_table">
+        <tr class="case_info">
+          <td class="title" width="25px">案次</td>
+          <td class="title_data">第一案</td>
+          <td class="title" width="50px">提案單位</td>
+          <td class="title_data">{{proposal.dept}} {{proposal.name}}</td>
+        </tr>
+        <tr class="case_summary">
+          <td class="title">案由</td>
+          <td colspan="3" align="left">{{proposal.reason}}</td>
+        </tr>
+        <tr class="case_description">
+          <td class="title">說明</td>
+          <td colspan="3" align="left">
+            <a v-for="(description,index) in proposal.description" :key="index" :href="description" target="_blank">{{description}}</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="title">討論</td>
+          <td colspan="3" align="left">{{proposal.discussion}}</td>
+        </tr>
+      </table>
 
-    <VoteWindow v-show="votingInfo.isVoting && showVoteWindow" @vote="vote" />
+      <VoteWindow v-show="votingInfo.isVoting && showVoteWindow" @vote="vote" />
 
-    <LeaderVoteWindow v-if="isLeader" v-show="showLeaderVoteWindow"/>
-    <div class="toggle_btns">
-      <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
-      <div class="toggle_btns__vote" :class="{ is_open: votingInfo.isVoting && showVoteWindow }" @click="toggleVoteWindow">投</div>
+      <LeaderVoteWindow v-if="isLeader" v-show="showLeaderVoteWindow"/>
+      <div class="toggle_btns">
+        <div v-if="isLeader" class="toggle_btns__leader" :class="{ is_open: showLeaderVoteWindow }" @click="toggleLeaderWindow">管</div>
+        <div class="toggle_btns__vote" :class="{ is_open: votingInfo.isVoting && showVoteWindow }" @click="toggleVoteWindow">投</div>
+      </div>
     </div>
-    <VoteDetailWindow style="display:none"/>
+    <div v-else>
+      <p>查無此會議</p>
+      <router-link :to="{name: 'home'}" class="btn" tag="span">回到首頁</router-link>
+    </div>
+    <!-- <VoteDetailWindow style="display:none"/> -->
   </div>
 </template>
 
 <script>
 import VoteWindow from '@/components/VoteWindow.vue'
 import LeaderVoteWindow from '@/components/LeaderVoteWindow.vue'
-import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
+// import VoteDetailWindow from '@/components/VoteDetailWindow.vue'
 import { getProposalData, vote } from '@/api/proposal'
 import { mapState, mapActions } from 'vuex'
 
@@ -48,8 +54,8 @@ export default {
   name: 'ConferenceDetail',
   components: {
     VoteWindow,
-    LeaderVoteWindow,
-    VoteDetailWindow
+    LeaderVoteWindow
+    // VoteDetailWindow
   },
   data () {
     return {
@@ -62,15 +68,18 @@ export default {
     ...mapState({
       isLeader: state => state.user.isLeader,
       votingInfo: 'votingInfo'
-    })
+    }),
+    isProposalEmpty () {
+      return Object.keys(this.proposal).length === 0
+    }
   },
   created: async function () {
     this.setLodingStatus(true)
     await this.getProposalDetail(this.$route.params.delibrationID, this.$route.params.proposalID)
     this.setLodingStatus(false)
-    this.$socket.emit('entryVote', {
-      proposalID: this.$route.params.proposalID
-    })
+    // this.$socket.emit('entryVote', {
+    //   proposalID: this.$route.params.proposalID
+    // })
   },
   methods: {
     ...mapActions({
@@ -115,6 +124,7 @@ export default {
   border-color:#fff;
   border-collapse:collapse;
   margin-bottom: 130px;
+  width: 100%;
   .case_summary{
     font-weight: 700;
   }

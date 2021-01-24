@@ -4,13 +4,13 @@
     <input class="create_conference__input" id="name" v-model.trim="name" type="text" placeholder="第一次財委會" required>
 
     <label for="startTime">開始時間</label>
-    <input class="create_conference__input" id="startTime" v-model.trim="startTime" type="datetime-local" :min="timeNow" required>
+    <input class="create_conference__input" id="startTime" v-model.trim="startTime" type="datetime-local" required>
 
     <label for="endTime">結束時間</label>
     <input class="create_conference__input" id="endTime" v-model.trim="endTime" type="datetime-local" :min="startTime" required>
 
     <label for="position">權限</label>
-    <input class="create_conference__input" id="position" v-model.trim="position" type="text" placeholder="請填入權限" required>
+    <input class="create_conference__input" id="position" v-model.trim="position" type="text" placeholder="請填入權限(不限則留白)">
 
     <label for="semester">學年度</label>
     <input class="create_conference__input" id="semester" v-model.trim="semester" type="number" required>
@@ -20,6 +20,7 @@
 
     <div style="grid-column: 1 / span 2;">
       <button class="create_conference__btn" type="submit">送 出</button>
+      <span class="create_conference__error" v-if="error">{{ error }}</span>
     </div>
   </form>
 </template>
@@ -36,7 +37,8 @@ export default {
       position: '',
       semester: null,
       period: null,
-      timeNow: new Date(+new Date() + 8 * 3600 * 1000).toISOString().slice(0, 16)
+      timeNow: new Date(+new Date() + 8 * 3600 * 1000).toISOString().slice(0, 16),
+      error: null
       // new Date(+new Date() + 8 * 3600 * 1000).toISOString().slice(0, 16).replace(/T/, ' ')
     }
   },
@@ -51,7 +53,9 @@ export default {
           semester: this.semester,
           period: this.period
         })
-        console.log(res)
+        if (res.status === 200) {
+          this.$router.push('/')
+        }
       } catch (err) {
         console.error(err)
       }

@@ -38,7 +38,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "ConferenceChoose" */ '../views/conference/ConferenceChoose.vue'),
+    component: () => import(/* webpackChunkName: "Conference" */ '../views/conference/ConferenceChoose.vue'),
     meta: {
       title: '加入會議'
     }
@@ -46,12 +46,12 @@ const routes = [
   {
     path: '/conference/:delibrationID',
     name: 'schedule',
-    component: () => import(/* webpackChunkName: "ConferenceSchedule" */ '../views/conference/ConferenceSchedule.vue')
+    component: () => import(/* webpackChunkName: "Conference" */ '../views/conference/ConferenceSchedule.vue')
   },
   {
     path: '/editConference',
     name: 'editConference',
-    component: () => import(/* webpackChunkName: "EditConferenceChoose" */ '../views/edit/EditConferenceChoose.vue'),
+    component: () => import(/* webpackChunkName: "Edit" */ '../views/edit/EditConferenceChoose.vue'),
     meta: {
       title: '編輯會議',
       requiresAuth: true
@@ -60,7 +60,7 @@ const routes = [
   {
     path: '/editConference/:delibrationID',
     name: 'editSchedule',
-    component: () => import(/* webpackChunkName: "EditConferenceSchedule" */ '../views/edit/EditConferenceSchedule.vue'),
+    component: () => import(/* webpackChunkName: "Edit" */ '../views/edit/EditConferenceSchedule.vue'),
     meta: {
       requiresAuth: true
     }
@@ -68,7 +68,7 @@ const routes = [
   {
     path: '/createConference',
     name: 'createConference',
-    component: () => import(/* webpackChunkName: "CreateConference" */ '../views/edit/CreateConference.vue'),
+    component: () => import(/* webpackChunkName: "Edit" */ '../views/edit/CreateConference.vue'),
     meta: {
       title: '新增會議',
       requiresAuth: true
@@ -82,7 +82,16 @@ const routes = [
   {
     path: '/conference/:delibrationID/proposal/:proposalID',
     name: 'detail',
-    component: () => import(/* webpackChunkName: "ConferenceDetail" */ '../views/conference/ConferenceDetail.vue')
+    component: () => import(/* webpackChunkName: "Conference" */ '../views/conference/ConferenceDetail.vue')
+  },
+  {
+    path: '/edit/:delibrationID',
+    name: 'edit',
+    component: () => import(/* webpackChunkName: "Edit" */ '../views/edit/EditConference.vue'),
+    meta: {
+      title: '編輯會議資訊',
+      requiresAuth: true
+    }
   }
 ]
 

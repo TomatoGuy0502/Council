@@ -19,7 +19,7 @@
       <router-view/>
     </div>
     <ErrorWindow v-if="showError"/>
-    <Footer/>
+    <Footer v-show="showFooter"/>
   </div>
 </template>
 
@@ -45,7 +45,10 @@ export default {
     ...mapState({
       showError: state => state.error.showError,
       isLoding: 'isLoding'
-    })
+    }),
+    showFooter () {
+      return this.$route.name !== 'detail'
+    }
   }
 }
 </script>
@@ -150,6 +153,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 @media (min-width: 510px) {
